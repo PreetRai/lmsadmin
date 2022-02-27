@@ -59,6 +59,10 @@ class _LoginPageState extends State<LoginPage> {
     );
 
     final passwordField = TextFormField(
+      onEditingComplete: () {
+        signIn(emailController.text, passwordController.text);
+      },
+
       obscureText: true,
       autofocus: false,
       controller: passwordController,

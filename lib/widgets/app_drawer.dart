@@ -50,7 +50,19 @@ class _AppDrawerState extends State<AppDrawer> {
                     color: Theme.of(context).primaryColor,
                   ),
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: IconButton(
+                          icon: const Icon(
+                            Icons.settings,
+                            size: 15,
+                            color: Colors.white,
+                          ),
+                          onPressed: () {},
+                        ),
+                      ),
                       Container(
                         decoration:
                             const BoxDecoration(color: Colors.transparent),
@@ -62,20 +74,20 @@ class _AppDrawerState extends State<AppDrawer> {
                           fit: BoxFit.fill,
                         )),
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
                               '${loggedInUser.firstName} ${loggedInUser.secondName}',
-                              style: const TextStyle(fontSize: 20)),
+                              style: const TextStyle(
+                                fontSize: 20,
+                                color: Colors.white,
+                              )),
                           Text(
                             '${loggedInUser.email}',
                             style: const TextStyle(
-                                color: Colors.black54,
+                                color: Colors.white,
                                 fontWeight: FontWeight.w100),
                             textScaleFactor: 0.8,
                           )
@@ -84,67 +96,96 @@ class _AppDrawerState extends State<AppDrawer> {
                     ],
                   )),
             ),
-            Expanded(
-              child: ListView(
-                padding: EdgeInsets.zero,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    child: Column(
-                      children: [
-                        TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                      builder: (context) => const DashBoard()));
-                            },
-                            child: const Text(
+            SizedBox(
+              height: 200,
+              child: Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (context) => const DashBoard()));
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: const [
+                            Text(
                               'Dashboard',
-                            )),
-                        TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const Employeedetails()));
-                            },
-                            child: const Text(
+                            ),
+                            Icon(Icons.dashboard)
+                          ],
+                        )),
+                    TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const Employeedetails()));
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: const [
+                            Text(
                               'Employees',
-                            )),
-                        TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                      builder: (context) => const Contacts()));
-                            },
-                            child: const Text(
+                            ),
+                            Icon(Icons.emoji_people_outlined)
+                          ],
+                        )),
+                    TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (context) => const Contacts()));
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: const [
+                            Text(
                               'Contacts',
-                            )),
-                        TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const Opportunities()));
-                            },
-                            child: const Text(
+                            ),
+                            Icon(Icons.contact_page)
+                          ],
+                        )),
+                    TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (context) => const Opportunities()));
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: const [
+                            Text(
                               'Opportunities',
-                            )),
-                      ],
-                    ),
-                  ),
-                ],
+                            ),
+                            Icon(Icons.group_add)
+                          ],
+                        )),
+                  ],
+                ),
               ),
             ),
+            const Expanded(child: SizedBox()),
             SizedBox(
-              width: 200,
+              width: double.infinity,
               child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
                       onPressed: () {
                         logout(context);
                       },
-                      child: const Text('Logout'))),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: const [
+                          Text('Logout'),
+                          Icon(
+                            Icons.logout,
+                            size: 15,
+                          )
+                        ],
+                      ))),
             )
           ],
         ),
