@@ -17,7 +17,7 @@ class _EmployeedetailsState extends State<Employeedetails> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: const CustomAppBar(),
-        drawer: AppDrawer(),
+        drawer: const AppDrawer(),
         body: Container(
           color: Colors.black12,
           child: Column(

@@ -1,13 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:lmsadmin/pages/contacts.dart';
-import 'package:lmsadmin/pages/dashboard.dart';
-import 'package:lmsadmin/pages/employees.dart';
-import 'package:lmsadmin/pages/opportunities.dart';
-
-import '../pages/dashboard.dart';
-
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({
     Key? key,

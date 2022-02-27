@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:lmsadmin/widgets/header.dart';
 
 import '../widgets/app_bar.dart';
+import '../widgets/app_drawer.dart';
 
 class Contacts extends StatefulWidget {
   const Contacts({Key? key}) : super(key: key);
@@ -12,6 +14,12 @@ class Contacts extends StatefulWidget {
 class _ContactsState extends State<Contacts> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: const CustomAppBar(), body: Container());
+    return Scaffold(
+      appBar: const CustomAppBar(),
+      drawer: const AppDrawer(),
+      body: Column(
+        children: const [Header(headerTitle: 'Contacts')],
+      ),
+    );
   }
 }

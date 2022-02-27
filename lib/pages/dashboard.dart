@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lmsadmin/model/user_model.dart';
-import 'package:lmsadmin/pages/login.dart';
 import 'package:lmsadmin/widgets/app_bar.dart';
 import 'package:lmsadmin/widgets/app_drawer.dart';
 import 'package:lmsadmin/widgets/header.dart';
