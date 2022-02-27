@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:lmsadmin/model/user_model.dart';
 import 'package:lmsadmin/pages/login.dart';
 import 'package:lmsadmin/widgets/app_bar.dart';
+import 'package:lmsadmin/widgets/app_drawer.dart';
+import 'package:lmsadmin/widgets/header.dart';
 
 class DashBoard extends StatefulWidget {
   const DashBoard({Key? key}) : super(key: key);
@@ -15,7 +17,7 @@ class DashBoard extends StatefulWidget {
 class _DashBoardState extends State<DashBoard> {
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
-  @override
+
   @override
   void initState() {
     super.initState();
@@ -33,34 +35,17 @@ class _DashBoardState extends State<DashBoard> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: const CustomAppBar(),
+        drawer: const AppDrawer(),
         body: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Text('Welcome'),
-                const SizedBox(
-                  height: 10,
-                ),
-                Text('Name: ${loggedInUser.firstName}'),
-                Text('Email: ${loggedInUser.email}'),
-                Text('Uid: ${loggedInUser.uid}'),
-                ElevatedButton(
-                    onPressed: () {
-                      logout(context);
-                    },
-                    child: const Text('Logout'))
-              ],
-            ),
+          child: Column(
+            children: const [
+              Header(headerTitle: 'Dashboard'),
+              Text('Welcome'),
+              SizedBox(
+                height: 10,
+              ),
+            ],
           ),
         ));
-  }
-
-  Future<void> logout(BuildContext context) async {
-    await FirebaseAuth.instance.signOut();
-    Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const LoginPage()));
   }
 }

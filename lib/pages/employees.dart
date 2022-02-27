@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lmsadmin/widgets/app_drawer.dart';
 import 'package:lmsadmin/widgets/header.dart';
 import '../widgets/app_bar.dart';
 
@@ -16,12 +17,13 @@ class _EmployeedetailsState extends State<Employeedetails> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: const CustomAppBar(),
+        drawer: AppDrawer(),
         body: Container(
           color: Colors.black12,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              const Header(),
+              const Header(headerTitle: 'Employees'),
               Expanded(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,

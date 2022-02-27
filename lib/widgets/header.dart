@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 class Header extends StatefulWidget {
-  const Header({Key? key}) : super(key: key);
+  final String headerTitle;
+  const Header({Key? key, required this.headerTitle}) : super(key: key);
 
   @override
-  _HeaderState createState() => _HeaderState();
+  State<Header> createState() => _HeaderState();
 }
 
 class _HeaderState extends State<Header> {
@@ -20,7 +21,7 @@ class _HeaderState extends State<Header> {
           margin: const EdgeInsets.all(0),
           color: Colors.white,
           elevation: 2,
-          child: const Text('data'),
+          child: Text(widget.headerTitle),
         ));
   }
 }
