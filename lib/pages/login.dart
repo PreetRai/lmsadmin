@@ -17,9 +17,12 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
 //form key
   final _formkey = GlobalKey<FormState>();
+//Reset key
+  final _resetkey = GlobalKey<FormState>();
 //editing controller
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController resetController = TextEditingController();
 
 // firebase
   final _auth = FirebaseAuth.instance;
@@ -164,9 +167,14 @@ class _LoginPageState extends State<LoginPage> {
                                   style: TextButton.styleFrom(
                                       padding: const EdgeInsets.all(0)),
                                   onPressed: () {},
-                                  child: const Text(
-                                    'Forgot password?',
-                                    style: TextStyle(fontSize: 10),
+                                  child: TextButton(
+                                    onPressed: () {
+                                      openDialog();
+                                    },
+                                    child: const Text(
+                                      'Forgot password?',
+                                      style: TextStyle(fontSize: 10),
+                                    ),
                                   )),
                             ),
                             Align(
@@ -223,6 +231,98 @@ class _LoginPageState extends State<LoginPage> {
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                       builder: (context) => const DashBoard())),
                 });
+      } on FirebaseAuthException catch (error) {
+        switch (error.code) {
+          case "invalid-email":
+            errorMessage = "Your email address appears to be invalid.";
+
+            break;
+          case "wrong-password":
+            errorMessage = "Your password is wrong.";
+            break;
+          case "user-not-found":
+            errorMessage = "User with this email doesn't exist.";
+            break;
+          case "user-disabled":
+            errorMessage = "User with this email has been disabled.";
+            break;
+          case "too-many-requests":
+            errorMessage = "Too many requests";
+            break;
+          case "operation-not-allowed":
+            errorMessage = "Signing in with Email and Password is not enabled.";
+            break;
+          default:
+            errorMessage = "An undefined Error happened.";
+        }
+        Fluttertoast.showToast(msg: errorMessage!);
+        // ignore: avoid_print
+        print(error.code);
+      }
+    }
+  }
+
+  Future openDialog() => showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+            title: const Text('Your Name'),
+            content: SizedBox(
+              height: 100,
+              child: Form(
+                  key: _resetkey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      TextFormField(
+                        autofocus: false,
+                        controller: resetController,
+                        keyboardType: TextInputType.emailAddress,
+                        onSaved: (value) {
+                          resetController.text = value!;
+                        },
+                        textInputAction: TextInputAction.next,
+                        decoration: const InputDecoration(
+                            errorStyle: TextStyle(fontSize: 8),
+                            suffixIcon: Icon(Icons.email),
+                            fillColor: Colors.black12,
+                            labelStyle: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            labelText: 'Enter your email'),
+                        // The validator receives the text that the user has entered.
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter some text';
+                          }
+                          if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
+                              .hasMatch(value)) {
+                            return 'Please Enter a valid email';
+                          }
+                          return null;
+                        },
+                      ),
+                      Align(
+                        alignment: Alignment.bottomRight,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            resetEmail(resetController.text);
+                          },
+                          child: const Text('Reset'),
+                        ),
+                      ),
+                    ],
+                  )),
+            ),
+          ));
+
+  void resetEmail(String email) async {
+    if (_resetkey.currentState!.validate()) {
+      try {
+        await _auth.sendPasswordResetEmail(email: email).then((n) => {
+              Fluttertoast.showToast(msg: "Reset link sent Successful"),
+              Navigator.pop(context),
+            });
       } on FirebaseAuthException catch (error) {
         switch (error.code) {
           case "invalid-email":
