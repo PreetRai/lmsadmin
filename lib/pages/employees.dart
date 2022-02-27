@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lmsadmin/pages/addemployee.dart';
 import 'package:lmsadmin/widgets/app_drawer.dart';
 import 'package:lmsadmin/widgets/header.dart';
 import '../widgets/app_bar.dart';
@@ -13,10 +14,8 @@ class Employeedetails extends StatefulWidget {
 }
 
 class _EmployeedetailsState extends State<Employeedetails> {
-  final Widget addbutton = ElevatedButton(
-    onPressed: () {},
-    child: const Text('Add Employess'),
-  );
+  String buttonText = 'Add Employees';
+  bool isVisible = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,50 +28,66 @@ class _EmployeedetailsState extends State<Employeedetails> {
             children: [
               Header(
                 headerTitle: 'Employees',
-                addButton: addbutton,
+                addButton: ElevatedButton(
+                  onPressed: () => setState(() {
+                    if (isVisible == false) {
+                      isVisible = !isVisible;
+                      buttonText = 'Add Employee';
+                    } else {
+                      isVisible = !isVisible;
+                      buttonText = 'Show Employees';
+                    }
+                  }),
+                  child: Text(buttonText),
+                ),
               ),
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: 300,
-                      height: double.infinity,
-                      child: Expanded(
-                          child: Column(
-                        children: [
-                          Expanded(
-                            child: ListView.builder(
-                                itemCount: 10,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return Card(
-                                    child: ListTile(
-                                      title: const Text('data'),
-                                      subtitle: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: const [
-                                          Text("data"),
-                                          Text('data')
-                                        ],
+              Visibility(
+                visible: isVisible,
+                replacement: const AddEmployee(),
+                child: Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: 300,
+                        height: double.infinity,
+                        child: Expanded(
+                            child: Column(
+                          children: [
+                            Expanded(
+                              child: ListView.builder(
+                                  itemCount: 10,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return Card(
+                                      child: ListTile(
+                                        title: const Text('data'),
+                                        subtitle: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: const [
+                                            Text("data"),
+                                            Text('data')
+                                          ],
+                                        ),
+                                        leading: const FlutterLogo(size: 50),
                                       ),
-                                      leading: const FlutterLogo(size: 50),
-                                    ),
-                                  );
-                                }),
-                          ),
-                        ],
-                      )),
-                    ),
-                    const Expanded(
-                      child: Card(
-                        color: Colors.white,
-                        child: Center(
-                          child: Text('Select a Contact to get the details'),
-                        ),
+                                    );
+                                  }),
+                            ),
+                          ],
+                        )),
                       ),
-                    )
-                  ],
+                      const Expanded(
+                        child: Card(
+                          color: Colors.white,
+                          child: Center(
+                            child: Text('Select a Contact to get the details'),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               )
             ],
