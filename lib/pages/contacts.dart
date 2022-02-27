@@ -12,13 +12,19 @@ class Contacts extends StatefulWidget {
 }
 
 class _ContactsState extends State<Contacts> {
+  final Widget addbutton = ElevatedButton(
+    onPressed: () {},
+    child: const Text('Add Contacts'),
+  );
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(),
       drawer: const AppDrawer(),
       body: Column(
-        children: const [Header(headerTitle: 'Contacts')],
+        children: [
+          Header(headerTitle: 'Contacts', addButton: addbutton),
+        ],
       ),
     );
   }

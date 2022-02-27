@@ -12,13 +12,22 @@ class UserSettings extends StatefulWidget {
 }
 
 class _UserSettingsState extends State<UserSettings> {
+  final Widget addbutton = ElevatedButton(
+    onPressed: () {},
+    child: const Text('Add Contacts'),
+  );
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(),
       drawer: const AppDrawer(),
       body: Column(
-        children: const [Header(headerTitle: 'Contacts')],
+        children: [
+          Header(
+            headerTitle: 'Settings',
+            addButton: addbutton,
+          )
+        ],
       ),
     );
   }

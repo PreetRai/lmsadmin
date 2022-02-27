@@ -12,13 +12,22 @@ class Opportunities extends StatefulWidget {
 }
 
 class _OpportunitiesState extends State<Opportunities> {
+  final Widget addbutton = ElevatedButton(
+    onPressed: () {},
+    child: const Text('Add Opportunities'),
+  );
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(),
       drawer: const AppDrawer(),
       body: Column(
-        children: const [Header(headerTitle: 'Contacts')],
+        children: [
+          Header(
+            headerTitle: 'opportunities',
+            addButton: addbutton,
+          )
+        ],
       ),
     );
   }

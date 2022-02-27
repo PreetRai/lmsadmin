@@ -14,6 +14,10 @@ class DashBoard extends StatefulWidget {
 }
 
 class _DashBoardState extends State<DashBoard> {
+  final Widget addbutton = ElevatedButton(
+    onPressed: () {},
+    child: const Text('Dashboard'),
+  );
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
 
@@ -37,10 +41,13 @@ class _DashBoardState extends State<DashBoard> {
         drawer: const AppDrawer(),
         body: Center(
           child: Column(
-            children: const [
-              Header(headerTitle: 'Dashboard'),
-              Text('Welcome'),
-              SizedBox(
+            children: [
+              Header(
+                headerTitle: 'Dashboard',
+                addButton: addbutton,
+              ),
+              const Text('Welcome'),
+              const SizedBox(
                 height: 10,
               ),
             ],

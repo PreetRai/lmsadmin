@@ -13,6 +13,10 @@ class Employeedetails extends StatefulWidget {
 }
 
 class _EmployeedetailsState extends State<Employeedetails> {
+  final Widget addbutton = ElevatedButton(
+    onPressed: () {},
+    child: const Text('Add Employess'),
+  );
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +27,10 @@ class _EmployeedetailsState extends State<Employeedetails> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              const Header(headerTitle: 'Employees'),
+              Header(
+                headerTitle: 'Employees',
+                addButton: addbutton,
+              ),
               Expanded(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
