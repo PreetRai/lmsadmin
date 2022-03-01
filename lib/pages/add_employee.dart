@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:intl_phone_number_input/intl_phone_number_input.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:lmsadmin/model/user_model.dart';
 
 class AddEmployee extends StatefulWidget {
   const AddEmployee({Key? key}) : super(key: key);
@@ -12,8 +14,6 @@ class AddEmployee extends StatefulWidget {
 class _AddEmployeeState extends State<AddEmployee> {
   String date = "";
   DateTime selectedDate = DateTime.now();
-  String initialCountry = 'IN';
-  PhoneNumber number = PhoneNumber(isoCode: 'IN');
   final _auth = FirebaseAuth.instance;
   String? errorMessage;
   final _empformKey = GlobalKey<FormState>();
@@ -134,17 +134,8 @@ class _AddEmployeeState extends State<AddEmployee> {
       },
     );
 //phone
-    final phonenum = InternationalPhoneNumberInput(
-      onInputChanged: (PhoneNumber number) {
-        print(number.phoneNumber);
-      },
-      onInputValidated: (bool value) {
-        print(value);
-      },
-      spaceBetweenSelectorAndTextField: 0,
-      selectorConfig: const SelectorConfig(
-          selectorType: PhoneInputSelectorType.DIALOG, showFlags: false),
-      inputDecoration: const InputDecoration(
+    final phonenum = TextFormField(
+      decoration: const InputDecoration(
           errorStyle: TextStyle(
             fontSize: 9,
           ),
@@ -155,19 +146,18 @@ class _AddEmployeeState extends State<AddEmployee> {
             fontWeight: FontWeight.bold,
           ),
           labelText: 'Phone number'),
-      ignoreBlank: false,
-      autoValidateMode: AutovalidateMode.disabled,
-      selectorTextStyle: const TextStyle(
-        color: Colors.black,
-        fontSize: 10,
-      ),
-      initialValue: number,
-      textFieldController: phoneEdititngController,
-      formatInput: false,
       keyboardType:
           const TextInputType.numberWithOptions(signed: true, decimal: true),
-      onSaved: (PhoneNumber number) {
-        print('On Saved: $number');
+      controller: phoneEdititngController,
+      validator: (value) {
+        RegExp regex = RegExp(r'^.{10,}$');
+        if (value!.isEmpty) {
+          return ("First Name cannot be Empty");
+        }
+        if (!regex.hasMatch(value)) {
+          return ("Enter Valid name(Min. 3 Character)");
+        }
+        return null;
       },
     );
 
@@ -191,20 +181,20 @@ class _AddEmployeeState extends State<AddEmployee> {
             labelText: 'Address'),
         // The validator receives the text that the user has entered.
         validator: (value) {
-          RegExp regex = RegExp(r'^.{,}$');
+          RegExp regex = RegExp(r'^{,}$');
           if (value!.isEmpty) {
             return ("address cannot be Empty");
-          }
-          if (!regex.hasMatch(value)) {
-            return ("Enter Valid Address");
           }
           return null;
         },
         onSaved: (value) {
           addressEdititngController.text = value!;
         });
-    final submitEmp =
-        ElevatedButton(onPressed: () {}, child: const Text('ADD'));
+    final submitEmp = ElevatedButton(
+        onPressed: () {
+          addemp(emailEditingController.text);
+        },
+        child: const Text('ADD'));
 
     return Expanded(
       child: Row(
@@ -262,7 +252,7 @@ class _AddEmployeeState extends State<AddEmployee> {
                     key: _empformKey,
                     child: Expanded(
                       child: Container(
-                        padding: const EdgeInsets.all(20),
+                        padding: const EdgeInsets.only(left: 20, right: 20),
                         child: Flex(direction: Axis.vertical, children: [
                           Flex(
                             direction: Axis.horizontal,
@@ -307,7 +297,7 @@ class _AddEmployeeState extends State<AddEmployee> {
                                   flex: 1,
                                   child: Padding(
                                       padding: const EdgeInsets.only(right: 8),
-                                      child: TextFormField( 
+                                      child: TextFormField(
                                         controller: dateEditingController,
                                         style: const TextStyle(fontSize: 14),
                                         decoration: const InputDecoration(
@@ -327,8 +317,7 @@ class _AddEmployeeState extends State<AddEmployee> {
                                           return null;
                                         },
                                         onSaved: (value) {
-                                          dateEditingController.text =
-                                              value!;
+                                          dateEditingController.text = value!;
                                         },
                                         onTap: () {
                                           _selectDate(context);
@@ -354,7 +343,10 @@ class _AddEmployeeState extends State<AddEmployee> {
                           Expanded(child: Container()),
                           Align(
                               alignment: Alignment.bottomRight,
-                              child: submitEmp)
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: submitEmp,
+                              ))
                         ]),
                       ),
                     ),
@@ -383,5 +375,72 @@ class _AddEmployeeState extends State<AddEmployee> {
             "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}";
       });
     }
+  }
+
+  void addemp(String email) async {
+    if (_empformKey.currentState!.validate()) {
+      try {
+        await _auth
+            .createUserWithEmailAndPassword(email: email, password: 'admin1')
+            .then((value) => {postDetailsToFirestore()})
+            .catchError((e) {
+          Fluttertoast.showToast(msg: e!.message);
+        });
+      } on FirebaseAuthException catch (error) {
+        switch (error.code) {
+          case "invalid-email":
+            errorMessage = "Your email address appears to be malformed.";
+            break;
+          case "wrong-password":
+            errorMessage = "Your password is wrong.";
+            break;
+          case "user-not-found":
+            errorMessage = "User with this email doesn't exist.";
+            break;
+          case "user-disabled":
+            errorMessage = "User with this email has been disabled.";
+            break;
+          case "too-many-requests":
+            errorMessage = "Too many requests";
+            break;
+          case "operation-not-allowed":
+            errorMessage = "Signing in with Email and Password is not enabled.";
+            break;
+          default:
+            errorMessage = "An undefined Error happened.";
+        }
+        Fluttertoast.showToast(msg: errorMessage!);
+        // ignore: avoid_print
+        print(error.code);
+      }
+    }
+  }
+
+  postDetailsToFirestore() async {
+    // calling our firestore
+    // calling our user model
+    // sedning these values
+
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    User? employee = _auth.currentUser;
+
+    EmpModel employeeModel = EmpModel();
+
+    // writing all the values
+    employeeModel.email = emailEditingController.text;
+    employeeModel.uid = employee?.uid;
+    employeeModel.firstName = firstNameEditingController.text;
+    employeeModel.secondName = secondNameEditingController.text;
+    employeeModel.address = addressEdititngController.text;
+    employeeModel.jobTile = jobtitleController.text;
+    employeeModel.joiningDate = dateEditingController.text;
+    employeeModel.phone = phoneEdititngController.text;
+    employeeModel.isAdmin = false;
+    await firebaseFirestore
+        .collection("Employees")
+        .doc(employee?.uid)
+        .set(employeeModel.toMap());
+    Fluttertoast.showToast(msg: "Account created successfully :) ");
+    _empformKey.currentState?.reset();
   }
 }

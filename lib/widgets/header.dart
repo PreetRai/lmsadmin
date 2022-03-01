@@ -14,7 +14,7 @@ class _HeaderState extends State<Header> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        height: 100,
+        height: 85,
         width: double.infinity,
         child: Card(
           shape: RoundedRectangleBorder(

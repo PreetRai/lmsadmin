@@ -323,6 +323,11 @@ class _LoginPageState extends State<LoginPage> {
 
   void resetEmail(String email) async {
     if (_resetkey.currentState!.validate()) {
+
+
+
+
+      
       try {
         await _auth.sendPasswordResetEmail(email: email).then((n) => {
               Fluttertoast.showToast(msg: "Reset link sent Successful"),

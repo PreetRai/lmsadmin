@@ -4,9 +4,14 @@ class AdminModel {
   String? firstName;
   String? secondName;
   String? username;
-
+  bool? isAdmin = true;
   AdminModel(
-      {this.uid, this.email, this.firstName, this.secondName, this.username});
+      {this.uid,
+      this.email,
+      this.firstName,
+      this.secondName,
+      this.username,
+      this.isAdmin});
 
   // receiving data from server
   factory AdminModel.fromMap(map) {
@@ -15,7 +20,8 @@ class AdminModel {
         email: map['email'],
         firstName: map['firstName'],
         secondName: map['secondName'],
-        username: map['username']);
+        username: map['username'],
+        isAdmin: map['isadmin']);
   }
 
   // sending data to our server
@@ -26,6 +32,63 @@ class AdminModel {
       'firstName': firstName,
       'secondName': secondName,
       'username': username,
+      'isAdmin': isAdmin,
+    };
+  }
+}
+
+class EmpModel {
+  String? uid;
+  String? firstName;
+  String? secondName;
+  String? jobTile;
+  String? joiningDate;
+  String? email;
+  String? phone;
+  String? address;
+  String? username;
+
+  bool? isAdmin;
+  EmpModel(
+      {this.uid,
+      this.email,
+      this.firstName,
+      this.secondName,
+      this.username,
+      this.jobTile,
+      this.address,
+      this.joiningDate,
+      this.phone,
+      this.isAdmin});
+
+  // receiving data from server
+  factory EmpModel.fromMap(map) {
+    return EmpModel(
+        uid: map['uid'],
+        email: map['email'],
+        firstName: map['firstName'],
+        secondName: map['secondName'],
+        username: map['username'],
+        jobTile: map['jobtitle'],
+        address: map['address'],
+        joiningDate: map['joiningdate'],
+        phone: map['phone'],
+        isAdmin: map['isAdmin']);
+  }
+
+  // sending data to our server
+  Map<String, dynamic> toMap() {
+    return {
+      'uid': uid,
+      'email': email,
+      'firstName': firstName,
+      'secondName': secondName,
+      'username': username,
+      'jobtitle': jobTile,
+      'address': address,
+      'joiningdate': joiningDate,
+      'phone': phone,
+      'isAdmin': isAdmin,
     };
   }
 }
