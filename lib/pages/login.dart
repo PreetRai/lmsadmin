@@ -267,58 +267,59 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future openDialog() => showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-            title: const Text('Your Name'),
-            content: SizedBox(
-              height: 100,
-              child: Form(
-                  key: _resetkey,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      TextFormField(
-                        autofocus: false,
-                        controller: resetController,
-                        keyboardType: TextInputType.emailAddress,
-                        onSaved: (value) {
-                          resetController.text = value!;
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Your Name'),
+          content: SizedBox(
+            height: 100,
+            child: Form(
+                key: _resetkey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextFormField(
+                      autofocus: false,
+                      controller: resetController,
+                      keyboardType: TextInputType.emailAddress,
+                      onSaved: (value) {
+                        resetController.text = value!;
+                      },
+                      textInputAction: TextInputAction.next,
+                      decoration: const InputDecoration(
+                          errorStyle: TextStyle(fontSize: 8),
+                          suffixIcon: Icon(Icons.email),
+                          fillColor: Colors.black12,
+                          labelStyle: TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          labelText: 'Enter your email'),
+                      // The validator receives the text that the user has entered.
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                        if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
+                            .hasMatch(value)) {
+                          return 'Please Enter a valid email';
+                        }
+                        return null;
+                      },
+                    ),
+                    Align(
+                      alignment: Alignment.bottomRight,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          resetEmail(resetController.text);
                         },
-                        textInputAction: TextInputAction.next,
-                        decoration: const InputDecoration(
-                            errorStyle: TextStyle(fontSize: 8),
-                            suffixIcon: Icon(Icons.email),
-                            fillColor: Colors.black12,
-                            labelStyle: TextStyle(
-                              fontSize: 10,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            labelText: 'Enter your email'),
-                        // The validator receives the text that the user has entered.
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter some text';
-                          }
-                          if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
-                              .hasMatch(value)) {
-                            return 'Please Enter a valid email';
-                          }
-                          return null;
-                        },
+                        child: const Text('Reset'),
                       ),
-                      Align(
-                        alignment: Alignment.bottomRight,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            resetEmail(resetController.text);
-                          },
-                          child: const Text('Reset'),
-                        ),
-                      ),
-                    ],
-                  )),
-            ),
-          ));
+                    ),
+                  ],
+                )),
+          ),
+        ),
+      );
 
   void resetEmail(String email) async {
     if (_resetkey.currentState!.validate()) {

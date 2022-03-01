@@ -79,7 +79,7 @@ class _SignupPageState extends State<SignupPage> {
           return null;
         },
         onSaved: (value) {
-          secondNameEditingController.text = value!;
+          firstNameEditingController.text = value!;
         });
 
     //second name field
@@ -311,7 +311,6 @@ class _SignupPageState extends State<SignupPage> {
   void signUp(String email, String password) async {
     if (_formKey.currentState!.validate()) {
       try {
-   
         await _auth
             .createUserWithEmailAndPassword(email: email, password: password)
             .then((value) => {postDetailsToFirestore()})
@@ -365,7 +364,7 @@ class _SignupPageState extends State<SignupPage> {
     userModel.secondName = secondNameEditingController.text;
     userModel.username = usernameEditingController.text;
     await firebaseFirestore
-        .collection("users")
+        .collection("Admin")
         .doc(user.uid)
         .set(userModel.toMap());
     Fluttertoast.showToast(msg: "Account created successfully :) ");

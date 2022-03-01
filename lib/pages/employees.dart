@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lmsadmin/pages/addemployee.dart';
+import 'package:lmsadmin/pages/add_employee.dart';
 import 'package:lmsadmin/widgets/app_drawer.dart';
 import 'package:lmsadmin/widgets/header.dart';
 import '../widgets/app_bar.dart';
@@ -48,12 +48,17 @@ class _EmployeedetailsState extends State<Employeedetails> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      SizedBox(
-                        width: 300,
-                        height: double.infinity,
-                        child: Expanded(
-                            child: Column(
+                      Flexible(
+                        flex: 1,
+                        child: Column(
                           children: [
+                            const Padding(
+                              padding: EdgeInsets.all(10),
+                              child: Text(
+                                'Registered Employees',
+                                style: TextStyle(fontSize: 15),
+                              ),
+                            ),
                             Expanded(
                               child: ListView.builder(
                                   itemCount: 10,
@@ -76,9 +81,10 @@ class _EmployeedetailsState extends State<Employeedetails> {
                                   }),
                             ),
                           ],
-                        )),
+                        ),
                       ),
-                      const Expanded(
+                      Flexible(
+                        flex: 3,
                         child: Card(
                           color: Colors.white,
                           child: Center(

@@ -5,6 +5,7 @@ import 'dart:html';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lmsadmin/pages/dashboard.dart';
+import 'package:lmsadmin/pages/employees.dart';
 import 'package:lmsadmin/pages/login.dart';
 
 class Homepage extends StatefulWidget {
@@ -21,7 +22,7 @@ class _HomepageState extends State<Homepage> {
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snap) {
         if (snap.hasData) {
-          return const DashBoard();
+          return const Employeedetails();
         }
         return const LoginPage();
       },

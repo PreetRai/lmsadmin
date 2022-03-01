@@ -96,75 +96,68 @@ class _AppDrawerState extends State<AppDrawer> {
                     ],
                   )),
             ),
-            SizedBox(
-              height: 200,
-              child: Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                  builder: (context) => const DashBoard()));
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: const [
-                            Text(
-                              'Dashboard',
-                            ),
-                            Icon(Icons.dashboard)
-                          ],
-                        )),
-                    TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const Employeedetails()));
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: const [
-                            Text(
-                              'Employees',
-                            ),
-                            Icon(Icons.emoji_people_outlined)
-                          ],
-                        )),
-                    TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                  builder: (context) => const Contacts()));
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: const [
-                            Text(
-                              'Contacts',
-                            ),
-                            Icon(Icons.contact_page)
-                          ],
-                        )),
-                    TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                  builder: (context) => const Opportunities()));
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: const [
-                            Text(
-                              'Opportunities',
-                            ),
-                            Icon(Icons.group_add)
-                          ],
-                        )),
-                  ],
-                ),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) => const DashBoard()));
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: const [
+                          Text(
+                            'Dashboard',
+                          ),
+                          Icon(Icons.dashboard)
+                        ],
+                      )),
+                  TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) => const Employeedetails()));
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: const [
+                          Text(
+                            'Employees',
+                          ),
+                          Icon(Icons.emoji_people_outlined)
+                        ],
+                      )),
+                  TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) => const Contacts()));
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: const [
+                          Text(
+                            'Contacts',
+                          ),
+                          Icon(Icons.contact_page)
+                        ],
+                      )),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) => const Opportunities()));
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: const [
+                        Text(
+                          'Opportunities',
+                        ),
+                        Icon(Icons.group_add)
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
             const Expanded(child: SizedBox()),
