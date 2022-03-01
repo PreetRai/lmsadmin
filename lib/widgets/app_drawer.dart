@@ -20,7 +20,7 @@ class AppDrawer extends StatefulWidget {
 
 class _AppDrawerState extends State<AppDrawer> {
   User? user = FirebaseAuth.instance.currentUser;
-  UserModel loggedInUser = UserModel();
+  AdminModel loggedinAdmin = AdminModel();
 
   @override
   void initState() {
@@ -30,7 +30,7 @@ class _AppDrawerState extends State<AppDrawer> {
         .doc(user!.uid)
         .get()
         .then((value) {
-      loggedInUser = UserModel.fromMap(value.data());
+      loggedinAdmin = AdminModel.fromMap(value.data());
       setState(() {});
     });
   }
@@ -79,13 +79,13 @@ class _AppDrawerState extends State<AppDrawer> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                              '${loggedInUser.firstName} ${loggedInUser.secondName}',
+                              '${loggedinAdmin.firstName} ${loggedinAdmin.secondName}',
                               style: const TextStyle(
                                 fontSize: 20,
                                 color: Colors.white,
                               )),
                           Text(
-                            '${loggedInUser.email}',
+                            '${loggedinAdmin.email}',
                             style: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w100),

@@ -19,7 +19,7 @@ class _DashBoardState extends State<DashBoard> {
     child: const Text('Dashboard'),
   );
   User? user = FirebaseAuth.instance.currentUser;
-  UserModel loggedInUser = UserModel();
+  AdminModel loggedInUser = AdminModel();
 
   @override
   void initState() {
@@ -29,7 +29,7 @@ class _DashBoardState extends State<DashBoard> {
         .doc(user!.uid)
         .get()
         .then((value) {
-      loggedInUser = UserModel.fromMap(value.data());
+      loggedInUser = AdminModel.fromMap(value.data());
       setState(() {});
     });
   }

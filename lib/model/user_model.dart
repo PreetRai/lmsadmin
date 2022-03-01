@@ -1,16 +1,16 @@
-class UserModel {
+class AdminModel {
   String? uid;
   String? email;
   String? firstName;
   String? secondName;
   String? username;
 
-  UserModel(
+  AdminModel(
       {this.uid, this.email, this.firstName, this.secondName, this.username});
 
   // receiving data from server
-  factory UserModel.fromMap(map) {
-    return UserModel(
+  factory AdminModel.fromMap(map) {
+    return AdminModel(
         uid: map['uid'],
         email: map['email'],
         firstName: map['firstName'],
