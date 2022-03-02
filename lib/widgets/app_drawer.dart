@@ -3,9 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../model/user_model.dart';
-import '../pages/contacts.dart';
+import '../pages/contacts/contacts.dart';
 import '../pages/dashboard.dart';
-import '../pages/employees.dart';
+import '../pages/employees/employees.dart';
 import '../pages/login.dart';
 import '../pages/opportunities.dart';
 

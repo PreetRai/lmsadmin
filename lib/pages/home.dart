@@ -5,7 +5,7 @@ import 'dart:html';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lmsadmin/pages/dashboard.dart';
-import 'package:lmsadmin/pages/employees.dart';
+import 'package:lmsadmin/pages/employees/employees.dart';
 import 'package:lmsadmin/pages/login.dart';
 
 class Homepage extends StatefulWidget {

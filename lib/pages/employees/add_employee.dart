@@ -12,7 +12,6 @@ class AddEmployee extends StatefulWidget {
 }
 
 class _AddEmployeeState extends State<AddEmployee> {
-  String date = "";
   DateTime selectedDate = DateTime.now();
   final _auth = FirebaseAuth.instance;
   String? errorMessage;
@@ -80,7 +79,7 @@ class _AddEmployeeState extends State<AddEmployee> {
     );
 
     //Jobtitle
-    final Jobtitle = TextFormField(
+    final jobtitle = TextFormField(
       controller: jobtitleController,
       style: const TextStyle(fontSize: 14),
       decoration: const InputDecoration(
@@ -101,7 +100,6 @@ class _AddEmployeeState extends State<AddEmployee> {
         jobtitleController.text = value!;
       },
     );
-    DateTime selectedDate = DateTime.now();
 
     //email field
     final emailEMPField = TextFormField(
@@ -152,10 +150,10 @@ class _AddEmployeeState extends State<AddEmployee> {
       validator: (value) {
         RegExp regex = RegExp(r'^.{10,}$');
         if (value!.isEmpty) {
-          return ("First Name cannot be Empty");
+          return ("Phone Number cannot be Empty");
         }
         if (!regex.hasMatch(value)) {
-          return ("Enter Valid name(Min. 3 Character)");
+          return ("Enter Valid Phone number(Min. 10 Character)");
         }
         return null;
       },
@@ -181,7 +179,6 @@ class _AddEmployeeState extends State<AddEmployee> {
             labelText: 'Address'),
         // The validator receives the text that the user has entered.
         validator: (value) {
-          RegExp regex = RegExp(r'^{,}$');
           if (value!.isEmpty) {
             return ("address cannot be Empty");
           }
@@ -291,7 +288,7 @@ class _AddEmployeeState extends State<AddEmployee> {
                                   flex: 1,
                                   child: Padding(
                                     padding: const EdgeInsets.only(right: 8),
-                                    child: Jobtitle,
+                                    child: jobtitle,
                                   )),
                               Flexible(
                                   flex: 1,
@@ -309,7 +306,6 @@ class _AddEmployeeState extends State<AddEmployee> {
                                                 fontSize: 10,
                                                 fontWeight: FontWeight.bold),
                                             labelText: 'Select Date'),
-                                        // The validator receives the text that the user has entered.
                                         validator: (value) {
                                           if (value!.isEmpty) {
                                             return ("Second Name cannot be Empty");
@@ -364,8 +360,8 @@ class _AddEmployeeState extends State<AddEmployee> {
     final DateTime? selected = await showDatePicker(
       context: context,
       initialDate: selectedDate,
-      firstDate: DateTime(2010),
-      lastDate: DateTime(2025),
+      firstDate: DateTime(1990),
+      lastDate: DateTime(3000),
     );
     if (selected != null && selected != selectedDate) {
       setState(() {

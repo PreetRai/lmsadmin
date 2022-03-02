@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:lmsadmin/pages/add_contacts.dart';
+import 'package:lmsadmin/pages/contacts/add_contacts.dart';
 import 'package:lmsadmin/widgets/header.dart';
 
-import '../widgets/app_bar.dart';
-import '../widgets/app_drawer.dart';
+import '../../widgets/app_bar.dart';
+import '../../widgets/app_drawer.dart';
 
 class Contacts extends StatefulWidget {
   const Contacts({Key? key}) : super(key: key);

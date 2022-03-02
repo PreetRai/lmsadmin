@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -31,7 +31,7 @@ class _SignupPageState extends State<SignupPage> {
     //username feild
     final userNameField = TextFormField(
         controller: usernameEditingController,
-        style: TextStyle(fontSize: 14),
+        style: const TextStyle(fontSize: 14),
         decoration: const InputDecoration(
             errorStyle: TextStyle(
               fontSize: 9,
@@ -58,7 +58,7 @@ class _SignupPageState extends State<SignupPage> {
     //first name field
     final firstNameField = TextFormField(
         controller: firstNameEditingController,
-        style: TextStyle(fontSize: 14),
+        style: const TextStyle(fontSize: 14),
         decoration: const InputDecoration(
             errorStyle: TextStyle(
               fontSize: 9,
@@ -85,7 +85,7 @@ class _SignupPageState extends State<SignupPage> {
     //second name field
     final secondNameField = TextFormField(
       controller: secondNameEditingController,
-      style: TextStyle(fontSize: 14),
+      style: const TextStyle(fontSize: 14),
       decoration: const InputDecoration(
           errorStyle: TextStyle(
             fontSize: 9,
@@ -201,7 +201,7 @@ class _SignupPageState extends State<SignupPage> {
     //signup
     final signUpButton = Container(
         alignment: Alignment.centerRight,
-        margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
+        margin: const EdgeInsets.fromLTRB(0, 20, 0, 0),
         child: SizedBox(
             height: 20,
             child: ElevatedButton(
@@ -270,8 +270,8 @@ class _SignupPageState extends State<SignupPage> {
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
                     child: Text('Sign in to start your session',
                         style: TextStyle(
                           color: Colors.black45,
@@ -370,6 +370,6 @@ class _SignupPageState extends State<SignupPage> {
     Fluttertoast.showToast(msg: "Account created successfully :) ");
 
     Navigator.pushAndRemoveUntil((context),
-        MaterialPageRoute(builder: (context) => DashBoard()), (route) => false);
+        MaterialPageRoute(builder: (context) => const DashBoard()), (route) => false);
   }
 }
