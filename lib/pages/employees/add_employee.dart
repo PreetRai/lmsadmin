@@ -19,7 +19,6 @@ class _AddEmployeeState extends State<AddEmployee> {
   final firstNameEditingController = TextEditingController();
   final secondNameEditingController = TextEditingController();
   final emailEditingController = TextEditingController();
-  final jobtitleController = TextEditingController();
   final mobileeditingController = TextEditingController();
   final addressEdititngController = TextEditingController();
   final phoneEdititngController = TextEditingController();
@@ -80,7 +79,7 @@ class _AddEmployeeState extends State<AddEmployee> {
 
     //Jobtitle
     final jobtitle = TextFormField(
-      controller: jobtitleController,
+      controller: jobtitleEditingController,
       style: const TextStyle(fontSize: 14),
       decoration: const InputDecoration(
           errorStyle: TextStyle(
@@ -97,7 +96,7 @@ class _AddEmployeeState extends State<AddEmployee> {
         return null;
       },
       onSaved: (value) {
-        jobtitleController.text = value!;
+        jobtitleEditingController.text = value!;
       },
     );
 
@@ -197,36 +196,6 @@ class _AddEmployeeState extends State<AddEmployee> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Flexible(
-            flex: 1,
-            child: Column(
-              children: [
-                const Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Text(
-                    'Unregistered Employees',
-                    style: TextStyle(fontSize: 15),
-                  ),
-                ),
-                Expanded(
-                  child: ListView.builder(
-                      itemCount: 10,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Card(
-                          child: ListTile(
-                            title: const Text('data'),
-                            subtitle: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [Text("data"), Text('data')],
-                            ),
-                            leading: const FlutterLogo(size: 50),
-                          ),
-                        );
-                      }),
-                ),
-              ],
-            ),
-          ),
           Flexible(
             flex: 3,
             child: Card(
@@ -428,7 +397,6 @@ class _AddEmployeeState extends State<AddEmployee> {
     employeeModel.firstName = firstNameEditingController.text;
     employeeModel.secondName = secondNameEditingController.text;
     employeeModel.address = addressEdititngController.text;
-    employeeModel.jobTile = jobtitleController.text;
     employeeModel.joiningDate = dateEditingController.text;
     employeeModel.phone = phoneEdititngController.text;
     employeeModel.isAdmin = false;
@@ -438,5 +406,9 @@ class _AddEmployeeState extends State<AddEmployee> {
         .set(employeeModel.toMap());
     Fluttertoast.showToast(msg: "Account created successfully :) ");
     _empformKey.currentState?.reset();
+    firstNameEditingController.clear();
+    secondNameEditingController.clear();
+    dateEditingController.clear();
+    jobtitleEditingController.clear();
   }
 }

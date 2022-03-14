@@ -22,7 +22,7 @@ class _HomepageState extends State<Homepage> {
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snap) {
         if (snap.hasData) {
-          return const Employeedetails();
+          return const DashBoard();
         }
         return const LoginPage();
       },

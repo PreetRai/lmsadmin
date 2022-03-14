@@ -26,7 +26,7 @@ class _AppDrawerState extends State<AppDrawer> {
   void initState() {
     super.initState();
     FirebaseFirestore.instance
-        .collection("users")
+        .collection("Admin")
         .doc(user!.uid)
         .get()
         .then((value) {

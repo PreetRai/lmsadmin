@@ -1,6 +1,6 @@
 // ignore_for_file: avoid_web_libraries_in_flutter, unused_import
-
 import 'dart:html';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';

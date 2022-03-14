@@ -9,87 +9,80 @@ class EmployeeNames extends StatefulWidget {
 }
 
 class _EmployeeNamesState extends State<EmployeeNames> {
-  ScrollController _scrollController = new ScrollController();
+  late ScrollController _controller;
+  @override
+  void initState() {
+    _controller = ScrollController();
+    _controller.addListener(_scrollListener); //the listener for up and down.
+    super.initState();
+  }
+
+  _scrollListener() {
+    if (_controller.offset >= _controller.position.maxScrollExtent &&
+        !_controller.position.outOfRange) {
+      setState(() {
+        //you can do anything here
+      });
+    }
+    if (_controller.offset <= _controller.position.minScrollExtent &&
+        !_controller.position.outOfRange) {
+      setState(() {
+        //you can do anything here
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    int? getcout() {
-      int? size;
-      FirebaseFirestore.instance
-          .collection("Employees")
-          .get()
-          .then((value) => {size = value.size});
-      return size;
-    }
-
-    int? x = getcout();
-
-    @override
-    void initState() {
-      super.initState();
-
-      _scrollController.addListener(() {
-        if (_scrollController.position.pixels ==
-            _scrollController.position.maxScrollExtent) {
-          print('Page reached end of page');
-          setState(() {});
-          getcout();
-        }
-      });
-    }
-
-    return
-    
-    
-     Flexible(
-       flex:1,
-       child: Column(
-         children: [
-            const  Padding(
-                                padding: EdgeInsets.all(10),
-                                child: Text(
-                                  'Registered Employees',
-                                  style: TextStyle(fontSize: 15),
-                                ),
-                              ),
-           Expanded(
+    return Flexible(
+      flex: 1,
+      child: Column(
+        children: [
+          const Padding(
+            padding: EdgeInsets.all(10),
+            child: Text(
+              'Registered Employees',
+              style: TextStyle(fontSize: 15),
+            ),
+          ),
+          Expanded(
             child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: x,
-                itemBuilder: (context, value) {
-                  return FutureBuilder(
-                      future: getdata(value),
-                      builder: (context, AsyncSnapshot<Map> snapshot) {
-                        Map employee = snapshot.data!;
-     
-                        return Card(
-                          child: ListTile(
-                            onTap: () {
-                      
-                            },
-                            title: Text('${employee['name']}'),
-                            subtitle: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  '${employee['email']}',
-                                  style: TextStyle(fontSize: 10),
-                                ),
-                                Text(
-                                  '${employee['phone']}',
-                                  style: TextStyle(fontSize: 10),
-                                )
-                              ],
+              controller: _controller,
+              itemCount: null,
+              itemBuilder: (context, value) {
+                return FutureBuilder(
+                  future: getdata(value),
+                  builder: (context, AsyncSnapshot<Map> snapshot) {
+                    Map employee = snapshot.data!;
+
+                    return Card(
+                      child: ListTile(
+                        onTap: () {},
+                        title: Text('${employee['name']}'),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '${employee['email']}',
+                              style: const TextStyle(fontSize: 10),
                             ),
-                            leading: const FlutterLogo(size: 50),
-                          ),
-                        );
-                      });
-                }),
-         ),
-         ],
-       ),
-     );
+                            Text(
+                              '${employee['phone']}',
+                              style: const TextStyle(fontSize: 10),
+                            )
+                          ],
+                        ),
+                        leading: const FlutterLogo(size: 50),
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
+          )
+        ],
+      ),
+    );
   }
 }
 

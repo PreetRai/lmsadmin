@@ -10,7 +10,7 @@ class DisplayEmpDetails extends StatefulWidget {
 class _DisplayEmpDetailsState extends State<DisplayEmpDetails> {
   @override
   Widget build(BuildContext context) {
-    return Flexible(
+    return const Flexible(
       flex: 3,
       child: Card(
         color: Colors.white,
