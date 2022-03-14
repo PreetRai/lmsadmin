@@ -9,29 +9,6 @@ class EmployeeNames extends StatefulWidget {
 }
 
 class _EmployeeNamesState extends State<EmployeeNames> {
-  late ScrollController _controller;
-  @override
-  void initState() {
-    _controller = ScrollController();
-    _controller.addListener(_scrollListener); //the listener for up and down.
-    super.initState();
-  }
-
-  _scrollListener() {
-    if (_controller.offset >= _controller.position.maxScrollExtent &&
-        !_controller.position.outOfRange) {
-      setState(() {
-        //you can do anything here
-      });
-    }
-    if (_controller.offset <= _controller.position.minScrollExtent &&
-        !_controller.position.outOfRange) {
-      setState(() {
-        //you can do anything here
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Flexible(
@@ -47,36 +24,45 @@ class _EmployeeNamesState extends State<EmployeeNames> {
           ),
           Expanded(
             child: ListView.builder(
-              controller: _controller,
-              itemCount: null,
+              itemCount: 5,
               itemBuilder: (context, value) {
                 return FutureBuilder(
-                  future: getdata(value),
-                  builder: (context, AsyncSnapshot<Map> snapshot) {
-                    Map employee = snapshot.data!;
-
-                    return Card(
-                      child: ListTile(
-                        onTap: () {},
-                        title: Text('${employee['name']}'),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              '${employee['email']}',
-                              style: const TextStyle(fontSize: 10),
+                    future: getdata(value),
+                    builder: (context, AsyncSnapshot<Map> snapshot) {
+                      switch (snapshot.connectionState) {
+                        case ConnectionState.none:
+                          return const Text('data');
+                        case ConnectionState.waiting:
+                          return const Card(
+                              child: ListTile(
+                                  leading: CircularProgressIndicator()));
+                        case ConnectionState.active:
+                        case ConnectionState.done:
+                          Map employee = snapshot.data!;
+                          return Card(
+                            child: ListTile(
+                              onTap: () {
+                              
+                              },
+                              title: Text('${employee['name']}'),
+                              subtitle: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    '${employee['email']}',
+                                    style: const TextStyle(fontSize: 10),
+                                  ),
+                                  Text(
+                                    '${employee['phone']}',
+                                    style: const TextStyle(fontSize: 10),
+                                  )
+                                ],
+                              ),
+                              leading: const FlutterLogo(size: 50),
                             ),
-                            Text(
-                              '${employee['phone']}',
-                              style: const TextStyle(fontSize: 10),
-                            )
-                          ],
-                        ),
-                        leading: const FlutterLogo(size: 50),
-                      ),
-                    );
-                  },
-                );
+                          );
+                      }
+                    });
               },
             ),
           )
