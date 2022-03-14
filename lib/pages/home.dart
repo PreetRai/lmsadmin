@@ -8,6 +8,8 @@ import 'package:lmsadmin/pages/dashboard.dart';
 import 'package:lmsadmin/pages/employees/employees.dart';
 import 'package:lmsadmin/pages/login.dart';
 
+import '../widgets/splash_screen.dart';
+
 class Homepage extends StatefulWidget {
   const Homepage({Key? key}) : super(key: key);
 
@@ -21,10 +23,19 @@ class _HomepageState extends State<Homepage> {
     return StreamBuilder(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snap) {
-        if (snap.hasData) {
-          return const DashBoard();
+        switch (snap.connectionState) {
+          case ConnectionState.none:
+            return const LoginPage();
+          case ConnectionState.waiting:
+            return const SplashScreen();
+          case ConnectionState.done:
+            return const DashBoard();
+          case ConnectionState.active:
+            if (snap.hasData) {
+              return const DashBoard();
+            }
+            return const LoginPage();
         }
-        return const LoginPage();
       },
     );
   }
