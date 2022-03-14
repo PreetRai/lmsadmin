@@ -23,48 +23,109 @@ class _EmployeeNamesState extends State<EmployeeNames> {
             ),
           ),
           Expanded(
-            child: ListView.builder(
-              itemCount: 5,
-              itemBuilder: (context, value) {
-                return FutureBuilder(
-                    future: getdata(value),
-                    builder: (context, AsyncSnapshot<Map> snapshot) {
-                      switch (snapshot.connectionState) {
-                        case ConnectionState.none:
-                          return const Text('data');
-                        case ConnectionState.waiting:
-                          return const Card(
-                              child: ListTile(
-                                  leading: CircularProgressIndicator()));
-                        case ConnectionState.active:
-                        case ConnectionState.done:
-                          Map employee = snapshot.data!;
-                          return Card(
-                            child: ListTile(
-                              onTap: () {
-                              
-                              },
-                              title: Text('${employee['name']}'),
-                              subtitle: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    '${employee['email']}',
-                                    style: const TextStyle(fontSize: 10),
-                                  ),
-                                  Text(
-                                    '${employee['phone']}',
-                                    style: const TextStyle(fontSize: 10),
-                                  )
-                                ],
-                              ),
-                              leading: const FlutterLogo(size: 50),
-                            ),
-                          );
-                      }
-                    });
+            child: FutureBuilder(
+              future: getcount(),
+              builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                switch (snapshot.connectionState) {
+                  case ConnectionState.none:
+                    return const Text('wait');
+                  case ConnectionState.waiting:
+                    return const Text('wait');
+
+                  case ConnectionState.active:
+
+                  case ConnectionState.done:
+                    return ListView.builder(
+                      itemCount: snapshot.data,
+                      itemBuilder: (context, value) {
+                        return FutureBuilder(
+                            future: getdata(value),
+                            builder: (context, AsyncSnapshot<Map> snapshot) {
+                              switch (snapshot.connectionState) {
+                                case ConnectionState.none:
+                                  return const Text('data');
+                                case ConnectionState.waiting:
+                                  return const Card(
+                                      child: ListTile(
+                                          leading:
+                                              CircularProgressIndicator()));
+                                case ConnectionState.active:
+                                case ConnectionState.done:
+                                  Map employee = snapshot.data!;
+                                  return Card(
+                                    child: ListTile(
+                                      onTap: () {},
+                                      title: Text('${employee['name']}'),
+                                      subtitle: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            '${employee['email']}',
+                                            style:
+                                                const TextStyle(fontSize: 10),
+                                          ),
+                                          Text(
+                                            '${employee['phone']}',
+                                            style:
+                                                const TextStyle(fontSize: 10),
+                                          )
+                                        ],
+                                      ),
+                                      leading: const FlutterLogo(size: 50),
+                                    ),
+                                  );
+                              }
+                            });
+                      },
+                    );
+                }
               },
             ),
+
+            //   child: ListView.builder(
+            //     itemCount: 5,
+            //     itemBuilder: (context, value) {
+            //       return FutureBuilder(
+            //           future: getdata(value),
+            //           builder: (context, AsyncSnapshot<Map> snapshot) {
+            //             switch (snapshot.connectionState) {
+            //               case ConnectionState.none:
+            //                 return const Text('data');
+            //               case ConnectionState.waiting:
+            //                 return const Card(
+            //                     child: ListTile(
+            //                         leading: CircularProgressIndicator()));
+            //               case ConnectionState.active:
+            //               case ConnectionState.done:
+            //                 Map employee = snapshot.data!;
+            //                 return Card(
+            //                   child: ListTile(
+            //                     onTap: () {
+
+            //                     },
+            //                     title: Text('${employee['name']}'),
+            //                     subtitle: Column(
+            //                       crossAxisAlignment: CrossAxisAlignment.start,
+            //                       children: [
+            //                         Text(
+            //                           '${employee['email']}',
+            //                           style: const TextStyle(fontSize: 10),
+            //                         ),
+            //                         Text(
+            //                           '${employee['phone']}',
+            //                           style: const TextStyle(fontSize: 10),
+            //                         )
+            //                       ],
+            //                     ),
+            //                     leading: const FlutterLogo(size: 50),
+            //                   ),
+            //                 );
+            //             }
+            //           });
+            //     },
+            //   ),
+            //
           )
         ],
       ),
@@ -83,4 +144,12 @@ Future<Map> getdata(int x) async {
   elementAt['phone'] = '${document.elementAt(x).get('phone')}';
 
   return elementAt;
+}
+
+Future<int> getcount() async {
+  final QuerySnapshot result =
+      await FirebaseFirestore.instance.collection('Employees').get();
+  final List<DocumentSnapshot> document = result.docs;
+  int x = document.length.toInt();
+  return x;
 }
