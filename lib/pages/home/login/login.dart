@@ -4,8 +4,8 @@ import 'dart:html';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:lmsadmin/pages/signup.dart';
-import 'dashboard.dart';
+import 'package:lmsadmin/pages/login/signup.dart';
+import '../dashboard.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);

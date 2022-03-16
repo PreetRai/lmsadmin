@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/app_bar.dart';
-import '../widgets/app_drawer.dart';
-import '../widgets/header.dart';
+import '../../widgets/app_bar.dart';
+import '../../widgets/app_drawer.dart';
+import '../../widgets/header.dart';
 
 class UserSettings extends StatefulWidget {
   const UserSettings({Key? key}) : super(key: key);

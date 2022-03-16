@@ -5,13 +5,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:lmsadmin/pages/contacts/contacts.dart';
-import 'package:lmsadmin/pages/dashboard.dart';
+import 'package:lmsadmin/pages/home/dashboard.dart';
 import 'package:lmsadmin/pages/employees/employees.dart';
-import 'package:lmsadmin/pages/home.dart';
-import 'package:lmsadmin/pages/login.dart';
-import 'package:lmsadmin/pages/opportunities.dart';
-import 'package:lmsadmin/pages/settings.dart';
-import 'package:lmsadmin/pages/signup.dart';
+import 'package:lmsadmin/pages/home/home.dart';
+import 'package:lmsadmin/pages/home/login/login.dart';
+import 'package:lmsadmin/pages/Setting/opportunities/opportunities.dart';
+import 'package:lmsadmin/pages/Setttings/settings.dart';
+import 'package:lmsadmin/pages/login/signup.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

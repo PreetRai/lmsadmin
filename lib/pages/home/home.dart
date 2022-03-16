@@ -4,11 +4,11 @@ import 'dart:html';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:lmsadmin/pages/dashboard.dart';
+import 'package:lmsadmin/pages/home/dashboard.dart';
 import 'package:lmsadmin/pages/employees/employees.dart';
-import 'package:lmsadmin/pages/login.dart';
+import 'package:lmsadmin/pages/home/login/login.dart';
 
-import '../widgets/splash_screen.dart';
+import '../../widgets/splash_screen.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({Key? key}) : super(key: key);

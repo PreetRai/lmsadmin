@@ -25,7 +25,7 @@ class _DashBoardState extends State<DashBoard> {
   void initState() {
     super.initState();
     FirebaseFirestore.instance
-        .collection("users")
+        .collection("Admin")
         .doc(user!.uid)
         .get()
         .then((value) {
