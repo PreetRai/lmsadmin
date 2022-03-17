@@ -398,6 +398,7 @@ class _AddEmployeeState extends State<AddEmployee> {
     employeeModel.secondName = secondNameEditingController.text;
     employeeModel.address = addressEdititngController.text;
     employeeModel.joiningDate = dateEditingController.text;
+    employeeModel.jobTile = jobtitleEditingController.text;
     employeeModel.phone = phoneEdititngController.text;
     employeeModel.isAdmin = false;
     await firebaseFirestore
