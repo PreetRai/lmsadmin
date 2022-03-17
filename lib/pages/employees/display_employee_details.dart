@@ -18,26 +18,186 @@ class _DisplayEmpDetailsState extends State<DisplayEmpDetails> {
       flex: 6,
       child: Card(
         color: Colors.white,
-        child: Center(
-          child: ValueListenableBuilder(
-            valueListenable: DisplayEmpDetails.uid,
-            builder: (BuildContext context, String newValue, Widget? child) {
-              if (newValue == '') {
-                return Text('Select an Employee fo the details');
-              }
-              return FutureBuilder(
-                future: getuser(newValue),
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  switch (snapshot.connectionState) {
-                    case ConnectionState.waiting:
-                      return const CircularProgressIndicator();
-                    default:
-                      Map details = snapshot.data!;
-                      return Text('${details['email']}');
-                  }
-                },
-              );
-            },
+        child: Expanded(
+          child: SizedBox(
+            width: double.infinity,
+            height: double.infinity,
+            child: ValueListenableBuilder(
+              valueListenable: DisplayEmpDetails.uid,
+              builder: (BuildContext context, String newValue, Widget? child) {
+                if (newValue == '') {
+                  return const Center(
+                      child: Text('Select an Employee fo the details'));
+                }
+                return FutureBuilder(
+                  future: getuser(newValue),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.waiting:
+                        return const Center(
+                          child: SizedBox(
+                              height: 50,
+                              width: 50,
+                              child: CircularProgressIndicator()),
+                        );
+                      default:
+                        Map details = snapshot.data!;
+                        return Expanded(
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Card(
+                                  elevation: 10,
+                                  child: SizedBox(
+                                    width: 300,
+                                    height: 500,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        children: [
+                                          Align(
+                                            alignment: Alignment.center,
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: SizedBox(
+                                                height: 90,
+                                                child: Image.asset(
+                                                  'assets/images/jh.png',
+                                                  fit: BoxFit.fill,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
+                                              '${details['firstName']} ${details['secondName']}',
+                                              style:
+                                                  const TextStyle(fontSize: 20),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child:
+                                                Text('${details['jobtitle']}'),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                const Text('Date of joining : ',
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                                Text(
+                                                    '${details['joiningdate']}'),
+                                              ],
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                const Text('Email : ',
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                                Text('${details['email']}'),
+                                              ],
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                const Text('Mobile no. : ',
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                                Text('${details['phone']}'),
+                                              ],
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                const Text('Address : ',
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                                Text('${details['address']}'),
+                                              ],
+                                            ),
+                                          ),
+                                          const Expanded(child: SizedBox()),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(2.0),
+                                                  child: ElevatedButton(
+                                                      onPressed: () {},
+                                                      child:
+                                                          const Text('Update')),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(2.0),
+                                                  child: ElevatedButton(
+                                                      style: ElevatedButton
+                                                          .styleFrom(
+                                                              primary:
+                                                                  Colors.red),
+                                                      onPressed: () {},
+                                                      child:
+                                                          const Text('Delete')),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const Expanded(
+                                child: SizedBox(
+                                  height: double.infinity,
+                                  child: Card(
+                                    elevation: 10,
+                                    child: Center(child: Text('data')),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        );
+                    }
+                  },
+                );
+              },
+            ),
           ),
         ),
       ),
