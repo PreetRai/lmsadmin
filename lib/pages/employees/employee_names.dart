@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:lmsadmin/pages/employees/display_employee_details.dart';
 
 class EmployeeNames extends StatefulWidget {
   const EmployeeNames({Key? key}) : super(key: key);
@@ -54,7 +55,10 @@ class _EmployeeNamesState extends State<EmployeeNames> {
                                   Map employee = snapshot.data!;
                                   return Card(
                                     child: ListTile(
-                                      onTap: () {},
+                                      onTap: () {
+                                        DisplayEmpDetails.uid.value =
+                                            employee['uid'].toString();
+                                      },
                                       title: Text('${employee['name']}'),
                                       subtitle: Column(
                                         crossAxisAlignment:
@@ -143,6 +147,7 @@ Future<Map> getdata(int x) async {
   elementAt['email'] = '${document.elementAt(x).get('email')}';
   elementAt['phone'] = '${document.elementAt(x).get('phone')}';
 
+  elementAt['uid'] = '${document.elementAt(x).get('uid')}';
   return elementAt;
 }
 
