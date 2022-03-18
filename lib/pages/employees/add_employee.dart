@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lmsadmin/model/user_model.dart';
 import 'package:lmsadmin/pages/employees/employees.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../widgets/app_bar.dart';
 import '../../widgets/app_drawer.dart';
@@ -194,6 +195,8 @@ class _AddEmployeeState extends State<AddEmployee> {
     final submitEmp = ElevatedButton(
         onPressed: () {
           addemp(emailEditingController.text);
+//          Navigator.of(context).pushReplacement(
+          //            MaterialPageRoute(builder: (context) => const Employeedetails()));
         },
         child: const Text('Add'));
 
@@ -361,6 +364,7 @@ class _AddEmployeeState extends State<AddEmployee> {
                                                         MaterialPageRoute(
                                                             builder: (context) =>
                                                                 const Employeedetails()));
+                                                print(_auth.currentUser!.email);
                                               },
                                               child: const Text('Cancel')),
                                         )
@@ -399,72 +403,34 @@ class _AddEmployeeState extends State<AddEmployee> {
 
   void addemp(String email) async {
     if (_empformKey.currentState!.validate()) {
-      try {
-        await _auth
-            .createUserWithEmailAndPassword(email: email, password: 'admin1')
-            .then((value) => {postDetailsToFirestore()})
-            .catchError((e) {
-          Fluttertoast.showToast(msg: e!.message);
-        });
-      } on FirebaseAuthException catch (error) {
-        switch (error.code) {
-          case "invalid-email":
-            errorMessage = "Your email address appears to be malformed.";
-            break;
-          case "wrong-password":
-            errorMessage = "Your password is wrong.";
-            break;
-          case "user-not-found":
-            errorMessage = "User with this email doesn't exist.";
-            break;
-          case "user-disabled":
-            errorMessage = "User with this email has been disabled.";
-            break;
-          case "too-many-requests":
-            errorMessage = "Too many requests";
-            break;
-          case "operation-not-allowed":
-            errorMessage = "Signing in with Email and Password is not enabled.";
-            break;
-          default:
-            errorMessage = "An undefined Error happened.";
-        }
-        Fluttertoast.showToast(msg: errorMessage!);
-        // ignore: avoid_print
-        print(error.code);
-      }
+      FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+      Uuid uuid = Uuid();
+      String uid = uuid.v4();
+      EmpModel employeeModel = EmpModel();
+      // writing all the values
+      employeeModel.email = emailEditingController.text;
+      employeeModel.uid = uid;
+      employeeModel.firstName = firstNameEditingController.text;
+      employeeModel.secondName = secondNameEditingController.text;
+      employeeModel.address = addressEdititngController.text;
+      employeeModel.joiningDate = dateEditingController.text;
+      employeeModel.jobTile = jobtitleEditingController.text;
+      employeeModel.phone = phoneEdititngController.text;
+      employeeModel.isAdmin = false;
+      await firebaseFirestore
+          .collection("Employees")
+          .doc(uid)
+          .set(employeeModel.toMap());
+
+      Fluttertoast.showToast(msg: "Employee added successfully :) ");
+      _empformKey.currentState?.reset();
+      firstNameEditingController.clear();
+      secondNameEditingController.clear();
+      dateEditingController.clear();
+      jobtitleEditingController.clear();
+      print(employeeModel);
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const Employeedetails()));
     }
-  }
-
-  postDetailsToFirestore() async {
-    // calling our firestore
-    // calling our user model
-    // sedning these values
-
-    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-    User? employee = _auth.currentUser;
-
-    EmpModel employeeModel = EmpModel();
-
-    // writing all the values
-    employeeModel.email = emailEditingController.text;
-    employeeModel.uid = employee?.uid;
-    employeeModel.firstName = firstNameEditingController.text;
-    employeeModel.secondName = secondNameEditingController.text;
-    employeeModel.address = addressEdititngController.text;
-    employeeModel.joiningDate = dateEditingController.text;
-    employeeModel.jobTile = jobtitleEditingController.text;
-    employeeModel.phone = phoneEdititngController.text;
-    employeeModel.isAdmin = false;
-    await firebaseFirestore
-        .collection("Employees")
-        .doc(employee?.uid)
-        .set(employeeModel.toMap());
-    Fluttertoast.showToast(msg: "Account created successfully :) ");
-    _empformKey.currentState?.reset();
-    firstNameEditingController.clear();
-    secondNameEditingController.clear();
-    dateEditingController.clear();
-    jobtitleEditingController.clear();
   }
 }

@@ -110,7 +110,7 @@ class _UpdateemployeedetailsState extends State<Updateemployeedetails> {
 
     //email field
     final emailEMPField = TextFormField(
-      enabled: false,
+      enabled: true,
       controller: emailEditingController,
       keyboardType: TextInputType.emailAddress,
       onSaved: (value) {
@@ -122,8 +122,6 @@ class _UpdateemployeedetailsState extends State<Updateemployeedetails> {
             fontSize: 9,
           ),
           suffixIcon: Icon(Icons.email),
-          filled: true,
-          fillColor: Colors.black12,
           labelStyle: TextStyle(
             fontSize: 10,
             fontWeight: FontWeight.bold,

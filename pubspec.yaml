@@ -46,6 +46,7 @@ dependencies:
   mime_type: ^1.0.0
   syncfusion_flutter_datepicker: ^19.4.54
   intl_phone_number_input: ^0.7.0+2
+  uuid: ^3.0.6
 
 dev_dependencies:
   flutter_test:
