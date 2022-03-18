@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:lmsadmin/pages/employees/update_employee.dart';
 
 class DisplayEmpDetails extends StatefulWidget {
   static ValueNotifier<String> uid = ValueNotifier('');
@@ -111,7 +112,17 @@ class _DisplayEmpDetailsState extends State<DisplayEmpDetails> {
                                                     style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.bold)),
-                                                Text('${details['email']}'),
+                                                Flexible(
+                                                  child: SizedBox(
+                                                      width: 130,
+                                                      child: Align(
+                                                        alignment: Alignment
+                                                            .bottomRight,
+                                                        child: Text(
+                                                          '${details['email']}',
+                                                        ),
+                                                      )),
+                                                ),
                                               ],
                                             ),
                                           ),
@@ -156,7 +167,18 @@ class _DisplayEmpDetailsState extends State<DisplayEmpDetails> {
                                                   padding:
                                                       const EdgeInsets.all(2.0),
                                                   child: ElevatedButton(
-                                                      onPressed: () {},
+                                                      onPressed: () {
+                                                        String uid =
+                                                            details['uid'];
+                                                        Navigator.of(context)
+                                                            .pushReplacement(
+                                                                MaterialPageRoute(
+                                                                    builder:
+                                                                        (context) =>
+                                                                            Updateemployeedetails(
+                                                                              uid: uid,
+                                                                            )));
+                                                      },
                                                       child:
                                                           const Text('Update')),
                                                 ),

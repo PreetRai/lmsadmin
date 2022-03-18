@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lmsadmin/pages/home/dashboard.dart';
-import 'package:lmsadmin/pages/home/login/login.dart';
+import 'package:lmsadmin/pages/login/login.dart';
 
 import '../../model/user_model.dart';
 

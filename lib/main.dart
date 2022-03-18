@@ -8,7 +8,7 @@ import 'package:lmsadmin/pages/contacts/contacts.dart';
 import 'package:lmsadmin/pages/home/dashboard.dart';
 import 'package:lmsadmin/pages/employees/employees.dart';
 import 'package:lmsadmin/pages/home/home.dart';
-import 'package:lmsadmin/pages/home/login/login.dart';
+import 'package:lmsadmin/pages/login/login.dart';
 import 'package:lmsadmin/pages/Setting/opportunities/opportunities.dart';
 import 'package:lmsadmin/pages/Setttings/settings.dart';
 import 'package:lmsadmin/pages/login/signup.dart';

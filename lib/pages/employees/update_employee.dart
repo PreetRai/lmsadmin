@@ -2,26 +2,28 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:lmsadmin/model/user_model.dart';
 import 'package:lmsadmin/pages/employees/employees.dart';
-
+import 'package:lmsadmin/widgets/app_drawer.dart';
+import 'package:lmsadmin/widgets/header.dart';
+import '../../model/user_model.dart';
 import '../../widgets/app_bar.dart';
-import '../../widgets/app_drawer.dart';
-import '../../widgets/header.dart';
 
-class AddEmployee extends StatefulWidget {
-  const AddEmployee({Key? key}) : super(key: key);
+class Updateemployeedetails extends StatefulWidget {
+  final String uid;
+  const Updateemployeedetails({Key? key, required this.uid}) : super(key: key);
 
   @override
-  _AddEmployeeState createState() => _AddEmployeeState();
+  _UpdateemployeedetailsState createState() => _UpdateemployeedetailsState();
 }
 
-class _AddEmployeeState extends State<AddEmployee> {
+class _UpdateemployeedetailsState extends State<Updateemployeedetails> {
   DateTime selectedDate = DateTime.now();
   final _auth = FirebaseAuth.instance;
   String? errorMessage;
   final _empformKey = GlobalKey<FormState>();
   final firstNameEditingController = TextEditingController();
+
+  final uidEditingController = TextEditingController();
   final secondNameEditingController = TextEditingController();
   final emailEditingController = TextEditingController();
   final mobileeditingController = TextEditingController();
@@ -33,6 +35,7 @@ class _AddEmployeeState extends State<AddEmployee> {
 
   @override
   Widget build(BuildContext context) {
+    getuser(widget.uid);
     //First name
     final firstNameField = TextFormField(
         controller: firstNameEditingController,
@@ -107,6 +110,7 @@ class _AddEmployeeState extends State<AddEmployee> {
 
     //email field
     final emailEMPField = TextFormField(
+      enabled: false,
       controller: emailEditingController,
       keyboardType: TextInputType.emailAddress,
       onSaved: (value) {
@@ -118,6 +122,7 @@ class _AddEmployeeState extends State<AddEmployee> {
             fontSize: 9,
           ),
           suffixIcon: Icon(Icons.email),
+          filled: true,
           fillColor: Colors.black12,
           labelStyle: TextStyle(
             fontSize: 10,
@@ -193,25 +198,27 @@ class _AddEmployeeState extends State<AddEmployee> {
         });
     final submitEmp = ElevatedButton(
         onPressed: () {
-          addemp(emailEditingController.text);
+          updateemp(uidEditingController.text);
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => const Employeedetails()));
         },
-        child: const Text('Add'));
-
+        child: const Text('Update'));
     return Scaffold(
         appBar: const CustomAppBar(),
         drawer: const AppDrawer(),
         body: Container(
-            color: Colors.black12,
-            child:
-                Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+          color: Colors.black12,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
               Header(
                 headerTitle: 'Employees',
                 addButton: ElevatedButton(
-                  onPressed: () => setState(() {
+                  onPressed: () {
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
                         builder: (context) => const Employeedetails()));
-                  }),
-                  child: const Text('Show Employees'),
+                  },
+                  child: const Text('Show Employes'),
                 ),
               ),
               Expanded(
@@ -229,7 +236,7 @@ class _AddEmployeeState extends State<AddEmployee> {
                               child: Padding(
                                 padding: EdgeInsets.all(15),
                                 child: Text(
-                                  'Add Employees',
+                                  'Update Employees',
                                   style: TextStyle(
                                     fontSize: 15,
                                   ),
@@ -377,7 +384,41 @@ class _AddEmployeeState extends State<AddEmployee> {
                   ],
                 ),
               )
-            ])));
+            ],
+          ),
+        ));
+  }
+
+  void updateemp(String uid) async {
+    // calling our firestore
+    // calling our user model
+    // sedning these values
+
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    User? employee = _auth.currentUser;
+
+    EmpModel employeeModel = EmpModel();
+
+    // writing all the values
+    employeeModel.email = emailEditingController.text;
+    employeeModel.uid = uid;
+    employeeModel.firstName = firstNameEditingController.text;
+    employeeModel.secondName = secondNameEditingController.text;
+    employeeModel.address = addressEdititngController.text;
+    employeeModel.joiningDate = dateEditingController.text;
+    employeeModel.jobTile = jobtitleEditingController.text;
+    employeeModel.phone = phoneEdititngController.text;
+    employeeModel.isAdmin = false;
+    await firebaseFirestore
+        .collection("Employees")
+        .doc(uid)
+        .set(employeeModel.toMap());
+    Fluttertoast.showToast(msg: "Account updated successfully :) ");
+    _empformKey.currentState?.reset();
+    firstNameEditingController.clear();
+    secondNameEditingController.clear();
+    dateEditingController.clear();
+    jobtitleEditingController.clear();
   }
 
   _selectDate(BuildContext context) async {
@@ -397,74 +438,18 @@ class _AddEmployeeState extends State<AddEmployee> {
     }
   }
 
-  void addemp(String email) async {
-    if (_empformKey.currentState!.validate()) {
-      try {
-        await _auth
-            .createUserWithEmailAndPassword(email: email, password: 'admin1')
-            .then((value) => {postDetailsToFirestore()})
-            .catchError((e) {
-          Fluttertoast.showToast(msg: e!.message);
-        });
-      } on FirebaseAuthException catch (error) {
-        switch (error.code) {
-          case "invalid-email":
-            errorMessage = "Your email address appears to be malformed.";
-            break;
-          case "wrong-password":
-            errorMessage = "Your password is wrong.";
-            break;
-          case "user-not-found":
-            errorMessage = "User with this email doesn't exist.";
-            break;
-          case "user-disabled":
-            errorMessage = "User with this email has been disabled.";
-            break;
-          case "too-many-requests":
-            errorMessage = "Too many requests";
-            break;
-          case "operation-not-allowed":
-            errorMessage = "Signing in with Email and Password is not enabled.";
-            break;
-          default:
-            errorMessage = "An undefined Error happened.";
-        }
-        Fluttertoast.showToast(msg: errorMessage!);
-        // ignore: avoid_print
-        print(error.code);
-      }
-    }
-  }
-
-  postDetailsToFirestore() async {
-    // calling our firestore
-    // calling our user model
-    // sedning these values
-
-    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-    User? employee = _auth.currentUser;
-
-    EmpModel employeeModel = EmpModel();
-
-    // writing all the values
-    employeeModel.email = emailEditingController.text;
-    employeeModel.uid = employee?.uid;
-    employeeModel.firstName = firstNameEditingController.text;
-    employeeModel.secondName = secondNameEditingController.text;
-    employeeModel.address = addressEdititngController.text;
-    employeeModel.joiningDate = dateEditingController.text;
-    employeeModel.jobTile = jobtitleEditingController.text;
-    employeeModel.phone = phoneEdititngController.text;
-    employeeModel.isAdmin = false;
-    await firebaseFirestore
-        .collection("Employees")
-        .doc(employee?.uid)
-        .set(employeeModel.toMap());
-    Fluttertoast.showToast(msg: "Account created successfully :) ");
-    _empformKey.currentState?.reset();
-    firstNameEditingController.clear();
-    secondNameEditingController.clear();
-    dateEditingController.clear();
-    jobtitleEditingController.clear();
+  Future<Map> getuser(String newValue) async {
+    var collection = FirebaseFirestore.instance.collection('Employees');
+    var docSnapshot = await collection.doc(newValue).get();
+    Map<dynamic, dynamic> data = docSnapshot.data()!;
+    firstNameEditingController.text = data['firstName'];
+    secondNameEditingController.text = data['secondName'];
+    jobtitleEditingController.text = data['jobtitle'];
+    dateEditingController.text = data['joiningdate'];
+    emailEditingController.text = data['email'];
+    phoneEdititngController.text = data['phone'];
+    addressEdititngController.text = data['address'];
+    uidEditingController.text = data['uid'];
+    return data;
   }
 }

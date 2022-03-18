@@ -32,15 +32,10 @@ class _EmployeedetailsState extends State<Employeedetails> {
                 headerTitle: 'Employees',
                 addButton: ElevatedButton(
                   onPressed: () => setState(() {
-                    if (isVisible == false) {
-                      isVisible = !isVisible;
-                      buttonText = 'Add Employee';
-                    } else {
-                      isVisible = !isVisible;
-                      buttonText = 'Show Employees';
-                    }
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => const AddEmployee()));
                   }),
-                  child: Text(buttonText),
+                  child: Text('Add Employees'),
                 ),
               ),
               Visibility(

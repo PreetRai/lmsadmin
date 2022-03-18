@@ -6,7 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lmsadmin/pages/home/dashboard.dart';
 import 'package:lmsadmin/pages/employees/employees.dart';
-import 'package:lmsadmin/pages/home/login/login.dart';
+import 'package:lmsadmin/pages//login/login.dart';
 
 import '../../widgets/splash_screen.dart';
 
