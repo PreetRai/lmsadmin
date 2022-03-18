@@ -4,7 +4,7 @@ import 'package:lmsadmin/pages/employees/display_employee_details.dart';
 import 'package:lmsadmin/widgets/app_drawer.dart';
 import 'package:lmsadmin/widgets/header.dart';
 import '../../widgets/app_bar.dart';
-import 'employee_names.dart';
+import 'display_employee.dart';
 
 class Employeedetails extends StatefulWidget {
   const Employeedetails({

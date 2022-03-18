@@ -92,3 +92,56 @@ class EmpModel {
     };
   }
 }
+
+class ContactsModel {
+  String? cid;
+  String? firstName;
+  String? secondName;
+  String? email;
+  String? phone;
+  String? addressone;
+  String? addresstwo;
+  String? contactby;
+  String? employee;
+  ContactsModel({
+    this.cid,
+    this.email,
+    this.firstName,
+    this.secondName,
+    this.addressone,
+    this.addresstwo,
+    this.phone,
+    this.contactby,
+    this.employee,
+  });
+
+  // receiving data from server
+  factory ContactsModel.fromMap(map) {
+    return ContactsModel(
+      cid: map['cid'],
+      email: map['email'],
+      firstName: map['firstName'],
+      secondName: map['secondName'],
+      addressone: map['addressone'],
+      addresstwo: map['addresstwo'],
+      phone: map['phone'],
+      contactby: map['contactby'],
+      employee: map['employee']
+    );
+  }
+
+  // sending data to our server
+  Map<String, dynamic> toMap() {
+    return {
+      'employee':employee,
+      'contactby':contactby,
+      'cid': cid,
+      'email': email,
+      'firstName': firstName,
+      'secondName': secondName,
+      'addressone': addressone,
+      'addresstwo': addresstwo,
+      'phone': phone,
+    };
+  }
+}

@@ -390,16 +390,9 @@ class _UpdateemployeedetailsState extends State<Updateemployeedetails> {
   }
 
   void updateemp(String uid) async {
-    // calling our firestore
-    // calling our user model
-    // sedning these values
-
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-    User? employee = _auth.currentUser;
 
     EmpModel employeeModel = EmpModel();
-
-    // writing all the values
     employeeModel.email = emailEditingController.text;
     employeeModel.uid = uid;
     employeeModel.firstName = firstNameEditingController.text;
@@ -413,7 +406,7 @@ class _UpdateemployeedetailsState extends State<Updateemployeedetails> {
         .collection("Employees")
         .doc(uid)
         .set(employeeModel.toMap());
-    Fluttertoast.showToast(msg: "Account updated successfully :) ");
+    Fluttertoast.showToast(msg: "Employee updated successfully :) ");
     _empformKey.currentState?.reset();
     firstNameEditingController.clear();
     secondNameEditingController.clear();
