@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lmsadmin/pages/employees/display_employee_details.dart';
 
 class EmployeeNames extends StatefulWidget {
+  static ValueNotifier<String> refresh = ValueNotifier('');
   const EmployeeNames({Key? key}) : super(key: key);
 
   @override
@@ -24,68 +25,75 @@ class _EmployeeNamesState extends State<EmployeeNames> {
             ),
           ),
           Expanded(
-            child: FutureBuilder(
-              future: getcount(),
-              builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                switch (snapshot.connectionState) {
-                  case ConnectionState.none:
-                    return const Text('wait');
-                  case ConnectionState.waiting:
-                    return const Text('wait');
+            child: ValueListenableBuilder(
+                valueListenable: DisplayEmpDetails.uid,
+                builder: (BuildContext context, String value, Widget? child) {
+                  return FutureBuilder(
+                    future: getcount(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<dynamic> snapshot) {
+                      switch (snapshot.connectionState) {
+                        case ConnectionState.none:
+                          return const Text('wait');
+                        case ConnectionState.waiting:
+                          return const Text('wait');
 
-                  case ConnectionState.active:
+                        case ConnectionState.active:
 
-                  case ConnectionState.done:
-                    return ListView.builder(
-                      itemCount: snapshot.data,
-                      itemBuilder: (context, value) {
-                        return FutureBuilder(
-                            future: getdata(value),
-                            builder: (context, AsyncSnapshot<Map> snapshot) {
-                              switch (snapshot.connectionState) {
-                                case ConnectionState.none:
-                                  return const Text('data');
-                                case ConnectionState.waiting:
-                                  return const Card(
-                                      child: ListTile(
-                                          leading:
-                                              CircularProgressIndicator()));
-                                case ConnectionState.active:
-                                case ConnectionState.done:
-                                  Map employee = snapshot.data!;
-                                  return Card(
-                                    child: ListTile(
-                                      onTap: () {
-                                        DisplayEmpDetails.uid.value =
-                                            employee['uid'].toString();
-                                      },
-                                      title: Text('${employee['name']}'),
-                                      subtitle: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            '${employee['email']}',
-                                            style:
-                                                const TextStyle(fontSize: 10),
+                        case ConnectionState.done:
+                          return ListView.builder(
+                            itemCount: snapshot.data,
+                            itemBuilder: (context, value) {
+                              return FutureBuilder(
+                                  future: getdata(value),
+                                  builder:
+                                      (context, AsyncSnapshot<Map> snapshot) {
+                                    switch (snapshot.connectionState) {
+                                      case ConnectionState.none:
+                                        return const Text('data');
+                                      case ConnectionState.waiting:
+                                        return const Card(
+                                            child: ListTile(
+                                                leading:
+                                                    CircularProgressIndicator()));
+                                      case ConnectionState.active:
+                                      case ConnectionState.done:
+                                        Map employee = snapshot.data!;
+                                        return Card(
+                                          child: ListTile(
+                                            onTap: () {
+                                              DisplayEmpDetails.uid.value =
+                                                  employee['uid'].toString();
+                                            },
+                                            title: Text('${employee['name']}'),
+                                            subtitle: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  '${employee['email']}',
+                                                  style: const TextStyle(
+                                                      fontSize: 10),
+                                                ),
+                                                Text(
+                                                  '${employee['phone']}',
+                                                  style: const TextStyle(
+                                                      fontSize: 10),
+                                                )
+                                              ],
+                                            ),
+                                            leading:
+                                                const FlutterLogo(size: 50),
                                           ),
-                                          Text(
-                                            '${employee['phone']}',
-                                            style:
-                                                const TextStyle(fontSize: 10),
-                                          )
-                                        ],
-                                      ),
-                                      leading: const FlutterLogo(size: 50),
-                                    ),
-                                  );
-                              }
-                            });
-                      },
-                    );
-                }
-              },
-            ),
+                                        );
+                                    }
+                                  });
+                            },
+                          );
+                      }
+                    },
+                  );
+                }),
 
             //   child: ListView.builder(
             //     itemCount: 5,

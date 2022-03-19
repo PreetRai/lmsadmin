@@ -1,10 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lmsadmin/model/user_model.dart';
 import 'package:lmsadmin/widgets/app_bar.dart';
 import 'package:lmsadmin/widgets/app_drawer.dart';
 import 'package:lmsadmin/widgets/header.dart';
+
+import '../login/login.dart';
 
 class DashBoard extends StatefulWidget {
   const DashBoard({Key? key}) : super(key: key);
@@ -20,7 +23,7 @@ class _DashBoardState extends State<DashBoard> {
   );
   User? user = FirebaseAuth.instance.currentUser;
   AdminModel loggedInUser = AdminModel();
-
+  EmpModel loggedinemployee = EmpModel();
   @override
   void initState() {
     super.initState();
@@ -32,6 +35,15 @@ class _DashBoardState extends State<DashBoard> {
       loggedInUser = AdminModel.fromMap(value.data());
       setState(() {});
     });
+
+    FirebaseFirestore.instance
+        .collection("Employees")
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      loggedinemployee = EmpModel.fromMap(value.data());
+      setState(() {});
+    });
   }
 
   @override
@@ -39,19 +51,33 @@ class _DashBoardState extends State<DashBoard> {
     return Scaffold(
         appBar: const CustomAppBar(),
         drawer: const AppDrawer(),
-        body: Center(
-          child: Column(
-            children: [
-              Header(
-                headerTitle: 'Dashboard',
-                addButton: addbutton,
-              ),
-              const Text('Welcome'),
-              const SizedBox(
-                height: 10,
-              ),
-            ],
-          ),
-        ));
+        body: FutureBuilder(
+            future: checkadmin(loggedinemployee.isAdmin),
+            builder: (context, snap) {
+              return Center(
+                child: Column(
+                  children: [
+                    Header(
+                      headerTitle: 'Dashboard',
+                      addButton: addbutton,
+                    ),
+                    const Text('Welcome'),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                  ],
+                ),
+              );
+            }));
+  }
+
+  checkadmin(bool? isAdmin) async {
+    if (isAdmin == false) {
+      print(isAdmin);
+      Fluttertoast.showToast(msg: "You are not an Admin");
+      await FirebaseAuth.instance.signOut();
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const LoginPage()));
+    }
   }
 }

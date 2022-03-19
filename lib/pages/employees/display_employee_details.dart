@@ -190,7 +190,19 @@ class _DisplayEmpDetailsState extends State<DisplayEmpDetails> {
                                                           .styleFrom(
                                                               primary:
                                                                   Colors.red),
-                                                      onPressed: () {},
+                                                      onPressed: () {
+                                                        setState(() {
+                                                          FirebaseFirestore
+                                                              .instance
+                                                              .collection(
+                                                                  "Employees")
+                                                              .doc(details[
+                                                                  'uid'])
+                                                              .delete();
+                                                          DisplayEmpDetails
+                                                              .uid.value = "";
+                                                        });
+                                                      },
                                                       child:
                                                           const Text('Delete')),
                                                 )

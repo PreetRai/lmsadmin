@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_web_libraries_in_flutter, unused_import
 import 'dart:html';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -230,7 +231,7 @@ class _LoginPageState extends State<LoginPage> {
       try {
         await _auth
             .signInWithEmailAndPassword(email: email, password: password)
-            .then((uid) => {
+            .then((uid) async => {
                   Fluttertoast.showToast(msg: "Login Successful"),
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                       builder: (context) => const DashBoard())),
