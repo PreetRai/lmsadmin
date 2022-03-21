@@ -1,18 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:lmsadmin/pages/employees/update_employee.dart';
+import 'package:lmsadmin/pages/contacts/update_contacts.dart';
 
-class DisplayEmpDetails extends StatefulWidget {
-  static ValueNotifier<String> uid = ValueNotifier('');
-  const DisplayEmpDetails({
+class DisplayConDetails extends StatefulWidget {
+  static ValueNotifier<String> cid = ValueNotifier('');
+  const DisplayConDetails({
     Key? key,
   }) : super(key: key);
 
   @override
-  _DisplayEmpDetailsState createState() => _DisplayEmpDetailsState();
+  _DisplayConDetailsState createState() => _DisplayConDetailsState();
 }
 
-class _DisplayEmpDetailsState extends State<DisplayEmpDetails> {
+class _DisplayConDetailsState extends State<DisplayConDetails> {
   @override
   Widget build(BuildContext context) {
     return Flexible(
@@ -24,11 +24,11 @@ class _DisplayEmpDetailsState extends State<DisplayEmpDetails> {
             width: double.infinity,
             height: double.infinity,
             child: ValueListenableBuilder(
-              valueListenable: DisplayEmpDetails.uid,
+              valueListenable: DisplayConDetails.cid,
               builder: (BuildContext context, String newValue, Widget? child) {
                 if (newValue == '') {
                   return const Center(
-                      child: Text('Select an Employee fo the details'));
+                      child: Text('Select a Contact for the details'));
                 }
                 return FutureBuilder(
                   future: getuser(newValue),
@@ -43,6 +43,12 @@ class _DisplayEmpDetailsState extends State<DisplayEmpDetails> {
                         );
                       default:
                         Map details = snapshot.data!;
+                        var employeename;
+                        if (details['employee'] == null) {
+                          employeename = 'none';
+                        } else {
+                          employeename = details['employeename'];
+                        }
                         return Expanded(
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -83,26 +89,9 @@ class _DisplayEmpDetailsState extends State<DisplayEmpDetails> {
                                                         fontSize: 20),
                                                   ),
                                                 ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
-                                                  child: Text(
-                                                      '${details['jobtitle']}'),
-                                                ),
                                               ],
                                             ),
                                           ],
-                                        ),
-                                        const Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Text('Date of joining :- ',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold)),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child:
-                                              Text('${details['joiningdate']}'),
                                         ),
                                         const Padding(
                                           padding: EdgeInsets.all(8.0),
@@ -131,7 +120,7 @@ class _DisplayEmpDetailsState extends State<DisplayEmpDetails> {
                                         ),
                                         const Padding(
                                           padding: EdgeInsets.all(8.0),
-                                          child: Text('Address :- ',
+                                          child: Text('Address Line 1:- ',
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold)),
                                         ),
@@ -141,9 +130,51 @@ class _DisplayEmpDetailsState extends State<DisplayEmpDetails> {
                                               child: SizedBox(
                                                   width: 150,
                                                   child: Text(
-                                                      '${details['address']}'))),
+                                                      '${details['addressone']}'))),
                                         ),
-                                  const       Expanded(child: SizedBox()),
+                                        const Padding(
+                                          padding: EdgeInsets.all(8.0),
+                                          child: Text('Address Line 2:- ',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold)),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Flexible(
+                                              child: SizedBox(
+                                                  width: 150,
+                                                  child: Text(
+                                                      '${details['addresstwo']}'))),
+                                        ),
+                                        const Padding(
+                                          padding: EdgeInsets.all(8.0),
+                                          child: Text('Contact By:- ',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold)),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Flexible(
+                                              child: SizedBox(
+                                                  width: 150,
+                                                  child: Text(
+                                                      '${details['contactby']}'))),
+                                        ),
+                                        const Padding(
+                                          padding: EdgeInsets.all(8.0),
+                                          child: Text('Employee :- ',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold)),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Flexible(
+                                              child: SizedBox(
+                                                  width: 150,
+                                                  child:
+                                                      Text('${employeename}'))),
+                                        ),
+                                        const Expanded(child: SizedBox()),
                                         SizedBox(
                                           width: 300,
                                           child: Row(
@@ -155,16 +186,16 @@ class _DisplayEmpDetailsState extends State<DisplayEmpDetails> {
                                                     const EdgeInsets.all(2.0),
                                                 child: ElevatedButton(
                                                     onPressed: () {
-                                                      String uid =
-                                                          details['uid'];
+                                                      String cid =
+                                                          details['cid'];
                                                       Navigator.of(context)
                                                           .pushReplacement(
                                                               MaterialPageRoute(
                                                                   builder:
                                                                       (context) =>
-                                                                          Updateemployeedetails(
-                                                                            uid:
-                                                                                uid,
+                                                                          UpdateContact(
+                                                                            cid:
+                                                                                cid,
                                                                           )));
                                                     },
                                                     child:
@@ -183,11 +214,11 @@ class _DisplayEmpDetailsState extends State<DisplayEmpDetails> {
                                                         FirebaseFirestore
                                                             .instance
                                                             .collection(
-                                                                "Employees")
-                                                            .doc(details['uid'])
+                                                                "Contacts")
+                                                            .doc(details['cid'])
                                                             .delete();
-                                                        DisplayEmpDetails
-                                                            .uid.value = "";
+                                                        DisplayConDetails
+                                                            .cid.value = "";
                                                       });
                                                     },
                                                     child:
@@ -225,7 +256,7 @@ class _DisplayEmpDetailsState extends State<DisplayEmpDetails> {
   }
 
   Future<Map> getuser(String newValue) async {
-    var collection = FirebaseFirestore.instance.collection('Employees');
+    var collection = FirebaseFirestore.instance.collection('Contacts');
     var docSnapshot = await collection.doc(newValue).get();
     Map<dynamic, dynamic> data = docSnapshot.data()!;
 

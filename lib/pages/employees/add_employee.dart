@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lmsadmin/model/user_model.dart';
@@ -19,7 +18,6 @@ class AddEmployee extends StatefulWidget {
 
 class _AddEmployeeState extends State<AddEmployee> {
   DateTime selectedDate = DateTime.now();
-  final _auth = FirebaseAuth.instance;
   String? errorMessage;
   final _empformKey = GlobalKey<FormState>();
   final firstNameEditingController = TextEditingController();
@@ -218,167 +216,187 @@ class _AddEmployeeState extends State<AddEmployee> {
                 ),
               ),
               Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Flexible(
-                      flex: 3,
-                      child: Card(
-                        color: Colors.white,
-                        child: Column(
-                          children: [
-                            const Align(
-                              alignment: Alignment.topLeft,
-                              child: Padding(
-                                padding: EdgeInsets.all(15),
-                                child: Text(
-                                  'Add Employees',
-                                  style: TextStyle(
-                                    fontSize: 15,
+                child: SizedBox(
+                  width: 1000,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Flexible(
+                        flex: 3,
+                        child: Card(
+                          color: Colors.white,
+                          child: Column(
+                            children: [
+                              const Align(
+                                alignment: Alignment.topLeft,
+                                child: Padding(
+                                  padding: EdgeInsets.all(15),
+                                  child: Text(
+                                    'Add Employees',
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            Form(
-                              key: _empformKey,
-                              child: Expanded(
-                                child: Container(
-                                  padding: const EdgeInsets.only(
-                                      left: 20, right: 20),
-                                  child:
-                                      Flex(direction: Axis.vertical, children: [
-                                    Flex(
-                                      direction: Axis.horizontal,
-                                      children: [
-                                        Flexible(
-                                            flex: 1,
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  right: 8),
-                                              child: firstNameField,
-                                            )),
-                                        Flexible(
-                                            flex: 1,
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  right: 8),
-                                              child: secondNameField,
-                                            )),
-                                        Flexible(
-                                          flex: 1,
-                                          child: Align(
-                                            alignment: Alignment.center,
-                                            child: SizedBox(
-                                              height: 90,
-                                              child: Image.asset(
-                                                'assets/images/jh.png',
-                                                fit: BoxFit.fill,
+                              Form(
+                                key: _empformKey,
+                                child: Expanded(
+                                  child: Container(
+                                    padding: const EdgeInsets.only(
+                                        left: 20, right: 20),
+                                    child: Flex(
+                                        direction: Axis.vertical,
+                                        children: [
+                                          Flex(
+                                            direction: Axis.horizontal,
+                                            children: [
+                                              Flexible(
+                                                  flex: 1,
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            right: 8),
+                                                    child: firstNameField,
+                                                  )),
+                                              Flexible(
+                                                  flex: 1,
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            right: 8),
+                                                    child: secondNameField,
+                                                  )),
+                                              Flexible(
+                                                flex: 1,
+                                                child: Align(
+                                                  alignment: Alignment.center,
+                                                  child: SizedBox(
+                                                    height: 90,
+                                                    child: Image.asset(
+                                                      'assets/images/jh.png',
+                                                      fit: BoxFit.fill,
+                                                    ),
+                                                  ),
+                                                ),
                                               ),
-                                            ),
+                                            ],
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                    Flex(
-                                      direction: Axis.horizontal,
-                                      children: [
-                                        Flexible(
-                                            flex: 1,
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  right: 8),
-                                              child: jobtitle,
-                                            )),
-                                        Flexible(
-                                            flex: 1,
-                                            child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    right: 8),
-                                                child: TextFormField(
-                                                  controller:
-                                                      dateEditingController,
-                                                  style: const TextStyle(
-                                                      fontSize: 14),
-                                                  decoration:
-                                                      const InputDecoration(
-                                                          errorStyle: TextStyle(
-                                                            fontSize: 9,
-                                                          ),
-                                                          fillColor:
-                                                              Colors.black12,
-                                                          labelStyle: TextStyle(
-                                                              fontSize: 10,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
-                                                          labelText:
-                                                              'Select Date'),
-                                                  validator: (value) {
-                                                    if (value!.isEmpty) {
-                                                      return ("Second Name cannot be Empty");
-                                                    }
-                                                    return null;
-                                                  },
-                                                  onSaved: (value) {
-                                                    dateEditingController.text =
-                                                        value!;
-                                                  },
-                                                  onTap: () {
-                                                    _selectDate(context);
-                                                  },
-                                                  readOnly: true,
-                                                ))),
-                                        Flexible(flex: 1, child: Container()),
-                                      ],
-                                    ),
-                                    Flex(
-                                      direction: Axis.horizontal,
-                                      children: [
-                                        Flexible(flex: 2, child: emailEMPField),
-                                        Flexible(
-                                            flex: 1,
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: phonenum,
-                                            ))
-                                      ],
-                                    ),
-                                    addressField,
-                                    Expanded(child: Container()),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: submitEmp,
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(2.0),
-                                          child: ElevatedButton(
-                                              style: ElevatedButton.styleFrom(
-                                                  primary: Colors.red),
-                                              onPressed: () {
-                                                Navigator.of(context)
-                                                    .pushReplacement(
-                                                        MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                const Employeedetails()));
-                                                print(_auth.currentUser!.email);
-                                              },
-                                              child: const Text('Cancel')),
-                                        )
-                                      ],
-                                    )
-                                  ]),
+                                          Flex(
+                                            direction: Axis.horizontal,
+                                            children: [
+                                              Flexible(
+                                                  flex: 1,
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            right: 8),
+                                                    child: jobtitle,
+                                                  )),
+                                              Flexible(
+                                                  flex: 1,
+                                                  child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              right: 8),
+                                                      child: TextFormField(
+                                                        controller:
+                                                            dateEditingController,
+                                                        style: const TextStyle(
+                                                            fontSize: 14),
+                                                        decoration:
+                                                            const InputDecoration(
+                                                                errorStyle:
+                                                                    TextStyle(
+                                                                  fontSize: 9,
+                                                                ),
+                                                                fillColor: Colors
+                                                                    .black12,
+                                                                labelStyle: TextStyle(
+                                                                    fontSize:
+                                                                        10,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                                labelText:
+                                                                    'Select Date'),
+                                                        validator: (value) {
+                                                          if (value!.isEmpty) {
+                                                            return ("Second Name cannot be Empty");
+                                                          }
+                                                          return null;
+                                                        },
+                                                        onSaved: (value) {
+                                                          dateEditingController
+                                                              .text = value!;
+                                                        },
+                                                        onTap: () {
+                                                          _selectDate(context);
+                                                        },
+                                                        readOnly: true,
+                                                      ))),
+                                              Flexible(
+                                                  flex: 1, child: Container()),
+                                            ],
+                                          ),
+                                          Flex(
+                                            direction: Axis.horizontal,
+                                            children: [
+                                              Flexible(
+                                                  flex: 2,
+                                                  child: emailEMPField),
+                                              Flexible(
+                                                  flex: 1,
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: phonenum,
+                                                  ))
+                                            ],
+                                          ),
+                                          addressField,
+                                          Expanded(child: Container()),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: submitEmp,
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(2.0),
+                                                child: ElevatedButton(
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                            primary:
+                                                                Colors.red),
+                                                    onPressed: () {
+                                                      Navigator.of(context)
+                                                          .pushReplacement(
+                                                              MaterialPageRoute(
+                                                                  builder:
+                                                                      (context) =>
+                                                                          const Employeedetails()));
+                                                    },
+                                                    child:
+                                                        const Text('Cancel')),
+                                              )
+                                            ],
+                                          )
+                                        ]),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    )
-                  ],
+                      )
+                    ],
+                  ),
                 ),
               )
             ])));
@@ -404,7 +422,7 @@ class _AddEmployeeState extends State<AddEmployee> {
   void addemp(String email) async {
     if (_empformKey.currentState!.validate()) {
       FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-      Uuid uuid = Uuid();
+      const Uuid uuid = Uuid();
       String uid = uuid.v4();
       EmpModel employeeModel = EmpModel();
       // writing all the values
@@ -428,7 +446,6 @@ class _AddEmployeeState extends State<AddEmployee> {
       secondNameEditingController.clear();
       dateEditingController.clear();
       jobtitleEditingController.clear();
-      print(employeeModel);
       Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => const Employeedetails()));
     }

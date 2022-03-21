@@ -131,7 +131,7 @@ class _AppDrawerState extends State<AppDrawer> {
                   TextButton(
                       onPressed: () {
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => const Contacts()));
+                            builder: (context) => const Contactsdetails()));
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,

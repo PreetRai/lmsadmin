@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lmsadmin/pages/employees/display_employee_details.dart';
 
+import '../../widgets/search.dart';
+
 class EmployeeNames extends StatefulWidget {
   static ValueNotifier<String> refresh = ValueNotifier('');
   const EmployeeNames({Key? key}) : super(key: key);
@@ -13,6 +15,7 @@ class EmployeeNames extends StatefulWidget {
 class _EmployeeNamesState extends State<EmployeeNames> {
   @override
   Widget build(BuildContext context) {
+    TextEditingController searctexteditingcontroller = TextEditingController();
     return Flexible(
       flex: 1,
       child: Column(
@@ -24,6 +27,8 @@ class _EmployeeNamesState extends State<EmployeeNames> {
               style: TextStyle(fontSize: 15),
             ),
           ),
+          SearchInput(
+              textController: searctexteditingcontroller, hintText: "Search"),
           Expanded(
             child: ValueListenableBuilder(
                 valueListenable: DisplayEmpDetails.uid,
@@ -34,9 +39,9 @@ class _EmployeeNamesState extends State<EmployeeNames> {
                         AsyncSnapshot<dynamic> snapshot) {
                       switch (snapshot.connectionState) {
                         case ConnectionState.none:
-                          return const Text('wait');
+                          return const Text('fetching...');
                         case ConnectionState.waiting:
-                          return const Text('wait');
+                          return const Text('fetching...');
 
                         case ConnectionState.active:
 
@@ -57,6 +62,34 @@ class _EmployeeNamesState extends State<EmployeeNames> {
                                                 leading:
                                                     CircularProgressIndicator()));
                                       case ConnectionState.active:
+                                        Map employee = snapshot.data!;
+                                        return Card(
+                                          child: ListTile(
+                                            onTap: () {
+                                              DisplayEmpDetails.uid.value =
+                                                  employee['uid'].toString();
+                                            },
+                                            title: Text('${employee['name']}'),
+                                            subtitle: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  '${employee['email']}',
+                                                  style: const TextStyle(
+                                                      fontSize: 10),
+                                                ),
+                                                Text(
+                                                  '${employee['phone']}',
+                                                  style: const TextStyle(
+                                                      fontSize: 10),
+                                                )
+                                              ],
+                                            ),
+                                            leading:
+                                                const FlutterLogo(size: 50),
+                                          ),
+                                        );
                                       case ConnectionState.done:
                                         Map employee = snapshot.data!;
                                         return Card(
@@ -94,50 +127,6 @@ class _EmployeeNamesState extends State<EmployeeNames> {
                     },
                   );
                 }),
-
-            //   child: ListView.builder(
-            //     itemCount: 5,
-            //     itemBuilder: (context, value) {
-            //       return FutureBuilder(
-            //           future: getdata(value),
-            //           builder: (context, AsyncSnapshot<Map> snapshot) {
-            //             switch (snapshot.connectionState) {
-            //               case ConnectionState.none:
-            //                 return const Text('data');
-            //               case ConnectionState.waiting:
-            //                 return const Card(
-            //                     child: ListTile(
-            //                         leading: CircularProgressIndicator()));
-            //               case ConnectionState.active:
-            //               case ConnectionState.done:
-            //                 Map employee = snapshot.data!;
-            //                 return Card(
-            //                   child: ListTile(
-            //                     onTap: () {
-
-            //                     },
-            //                     title: Text('${employee['name']}'),
-            //                     subtitle: Column(
-            //                       crossAxisAlignment: CrossAxisAlignment.start,
-            //                       children: [
-            //                         Text(
-            //                           '${employee['email']}',
-            //                           style: const TextStyle(fontSize: 10),
-            //                         ),
-            //                         Text(
-            //                           '${employee['phone']}',
-            //                           style: const TextStyle(fontSize: 10),
-            //                         )
-            //                       ],
-            //                     ),
-            //                     leading: const FlutterLogo(size: 50),
-            //                   ),
-            //                 );
-            //             }
-            //           });
-            //     },
-            //   ),
-            //
           ),
         ],
       ),

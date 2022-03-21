@@ -3,23 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lmsadmin/model/user_model.dart';
 import 'package:lmsadmin/pages/contacts/contacts.dart';
-import 'package:lmsadmin/pages/employees/employees.dart';
-import 'package:uuid/uuid.dart';
 
 import '../../widgets/app_bar.dart';
 import '../../widgets/app_drawer.dart';
 import '../../widgets/header.dart';
 
-class AddContacts extends StatefulWidget {
-  const AddContacts({Key? key}) : super(key: key);
+class UpdateContact extends StatefulWidget {
+  final String cid;
+  const UpdateContact({Key? key, required this.cid}) : super(key: key);
 
   @override
-  _AddContactsState createState() => _AddContactsState();
+  _UpdateContact createState() => _UpdateContact();
 }
 
-class _AddContactsState extends State<AddContacts> {
+class _UpdateContact extends State<UpdateContact> {
   String? errorMessage;
   final _empformKey = GlobalKey<FormState>();
+  final cidEditingController = TextEditingController();
   final firstNameEditingController = TextEditingController();
   final secondNameEditingController = TextEditingController();
   final emailEditingController = TextEditingController();
@@ -28,9 +28,6 @@ class _AddContactsState extends State<AddContacts> {
 
   final addresstwoEdititngController = TextEditingController();
   final phoneEdititngController = TextEditingController();
-  final jobtitleEditingController = TextEditingController();
-
-  final dateEditingController = TextEditingController();
 
   // Initial Selected Value
   String? contactbydropdownvalue;
@@ -41,12 +38,14 @@ class _AddContactsState extends State<AddContacts> {
     'Refference',
     'Scanning',
   ];
-  var selectedName;
+  // ignore: prefer_typing_uninitialized_variables
+  var selectedName = null;
   String? employeenamesvalue;
 
   bool visible = false;
   @override
   Widget build(BuildContext context) {
+    getuser(widget.cid);
     //First name
     final firstNameField = TextFormField(
         controller: firstNameEditingController,
@@ -211,6 +210,15 @@ class _AddContactsState extends State<AddContacts> {
         onSaved: (value) {
           addresstwoEdititngController.text = value!;
         });
+
+    final submitEmp = ElevatedButton(
+        onPressed: () {
+          updatecontacts(cidEditingController.text);
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => const Contactsdetails()));
+        },
+        child: const Text('Update'));
+    // Initial Selected Value
 
     return Scaffold(
         appBar: const CustomAppBar(),
@@ -387,72 +395,77 @@ class _AddContactsState extends State<AddContacts> {
                                                         if (!snapshot.hasData) {
                                                           return const CircularProgressIndicator();
                                                         } else {
-                                                          List<DropdownMenuItem>
-                                                              employeNamesItems =
-                                                              [];
-                                                          for (int i = 0;
-                                                              i < x;
-                                                              i++) {
-                                                            DocumentSnapshot
-                                                                snap = snapshot
-                                                                    .data!
-                                                                    .docs[i];
+                                                          switch (snapshot
+                                                              .connectionState) {
+                                                            case ConnectionState
+                                                                .waiting:
+                                                              return const CircularProgressIndicator();
 
-                                                            employeNamesItems.add(
-                                                                DropdownMenuItem(
-                                                              child: Text(
-                                                                "${snap['firstName']} ${snap['secondName']}",
-                                                              ),
-                                                              value:
-                                                                  "${snap['uid']}",
-                                                            ));
+                                                            default:
+                                                              List<DropdownMenuItem>
+                                                                  employeNamesItems =
+                                                                  [];
+                                                              for (int i = 0;
+                                                                  i < x;
+                                                                  i++) {
+                                                                DocumentSnapshot
+                                                                    snap =
+                                                                    snapshot
+                                                                        .data!
+                                                                        .docs[i];
+
+                                                                employeNamesItems
+                                                                    .add(
+                                                                        DropdownMenuItem(
+                                                                  child: Text(
+                                                                    "${snap['firstName']} ${snap['secondName']}",
+                                                                  ),
+                                                                  value:
+                                                                      "${snap['uid']}",
+                                                                ));
+                                                              }
+                                                              return Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                              .all(
+                                                                          8.0),
+                                                                  child: Row(
+                                                                      children: [
+                                                                        const Padding(
+                                                                          padding:
+                                                                              EdgeInsets.all(8.0),
+                                                                          child:
+                                                                              Text('Employee : '),
+                                                                        ),
+                                                                        Padding(
+                                                                          padding:
+                                                                              const EdgeInsets.all(8.0),
+                                                                          child:
+                                                                              DropdownButton<dynamic>(
+                                                                            style:
+                                                                                const TextStyle(fontSize: 15),
+                                                                            hint:
+                                                                                const Text('Select Employee'),
+                                                                            icon:
+                                                                                const Icon(Icons.keyboard_arrow_down),
+                                                                            items:
+                                                                                employeNamesItems,
+                                                                            onChanged:
+                                                                                (employename) {
+                                                                              setState(() {
+                                                                                selectedName = employename;
+                                                                              });
+                                                                            },
+                                                                            value:
+                                                                                selectedName,
+                                                                          ),
+                                                                        )
+                                                                      ]));
                                                           }
-                                                          return Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .all(8.0),
-                                                              child: Row(
-                                                                  children: [
-                                                                    const Padding(
-                                                                      padding:
-                                                                          EdgeInsets.all(
-                                                                              8.0),
-                                                                      child: Text(
-                                                                          'Employee : '),
-                                                                    ),
-                                                                    Padding(
-                                                                      padding:
-                                                                          const EdgeInsets.all(
-                                                                              8.0),
-                                                                      child: DropdownButton<
-                                                                          dynamic>(
-                                                                        style: const TextStyle(
-                                                                            fontSize:
-                                                                                15),
-                                                                        hint: const Text(
-                                                                            'Select Employee'),
-                                                                        icon: const Icon(
-                                                                            Icons.keyboard_arrow_down),
-                                                                        items:
-                                                                            employeNamesItems,
-                                                                        onChanged:
-                                                                            (employename) {
-                                                                          setState(
-                                                                              () {
-                                                                            selectedName =
-                                                                                employename;
-                                                                          });
-                                                                        },
-                                                                        value:
-                                                                            selectedName,
-                                                                      ),
-                                                                    )
-                                                                  ]));
                                                         }
                                                       }),
                                             ),
                                           ]),
-                                          Expanded(child: Container()),
                                           Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.end,
@@ -460,15 +473,7 @@ class _AddContactsState extends State<AddContacts> {
                                               Padding(
                                                 padding:
                                                     const EdgeInsets.all(8.0),
-                                                child: ElevatedButton(
-                                                    onPressed: () {
-                                                      addcontacts();
-//          Navigator.of(context).pushReplacement(
-                                                      //            MaterialPageRoute(builder: (context) => const Employeedetails()));
-                                                    },
-                                                    child: const Text('Add'))
-                                                // Initial Selected Value
-                                                ,
+                                                child: submitEmp,
                                               ),
                                               Padding(
                                                 padding:
@@ -479,12 +484,15 @@ class _AddContactsState extends State<AddContacts> {
                                                             primary:
                                                                 Colors.red),
                                                     onPressed: () {
-                                                      Navigator.of(context)
-                                                          .pushReplacement(
-                                                              MaterialPageRoute(
-                                                                  builder:
-                                                                      (context) =>
-                                                                          const Contactsdetails()));
+                                                      // Navigator.of(context)
+                                                      //     .pushReplacement(
+                                                      //         MaterialPageRoute(
+                                                      //             builder:
+                                                      //                 (context) =>
+                                                      //                     const Employeedetails()));
+                                                      // print(_auth
+                                                      //     .currentUser!.email);
+                                                      getnamecount();
                                                     },
                                                     child:
                                                         const Text('Cancel')),
@@ -506,11 +514,9 @@ class _AddContactsState extends State<AddContacts> {
             ])));
   }
 
-  void addcontacts() async {
+  void updatecontacts(String cid) async {
     if (_empformKey.currentState!.validate()) {
       FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-      Uuid uuid = const Uuid();
-      String cid = uuid.v4();
       ContactsModel contactsModel = ContactsModel();
       // writing all the values
 
@@ -519,9 +525,11 @@ class _AddContactsState extends State<AddContacts> {
           .doc(selectedName)
           .get();
       contactsModel.employee = selectedName;
-      contactsModel.employeename =
-          '${result['firstName']} ${result['secondName']}';
+      contactsModel.employeename = '${result['firstName']} ${result['secondName']}';
       contactsModel.contactby = contactbydropdownvalue;
+
+      contactsModel.employee = selectedName;
+
       contactsModel.cid = cid;
       contactsModel.email = emailEditingController.text;
       contactsModel.firstName = firstNameEditingController.text;
@@ -534,16 +542,14 @@ class _AddContactsState extends State<AddContacts> {
           .doc(cid)
           .set(contactsModel.toMap());
 
-      Fluttertoast.showToast(msg: "Contact added successfully :) ");
+      Fluttertoast.showToast(msg: "Contact Updated successfully :) ");
       _empformKey.currentState?.reset();
-      Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => const Contactsdetails()));
     }
   }
 
   getnamecount() async {
     final QuerySnapshot result =
-        await FirebaseFirestore.instance.collection('Employees').get();
+        await FirebaseFirestore.instance.collection('Contacts').get();
     final List<DocumentSnapshot> document = result.docs;
     int x = document.length.toInt();
 
@@ -554,5 +560,23 @@ class _AddContactsState extends State<AddContacts> {
           '${document.elementAt(i).get('firstName')} ${document.elementAt(i).get('secondName')}');
     }
     return employees.toList();
+  }
+
+  Future<Map> getuser(String newValue) async {
+    var collection = FirebaseFirestore.instance.collection('Contacts');
+    var docSnapshot = await collection.doc(newValue).get();
+    Map<dynamic, dynamic> data = docSnapshot.data()!;
+    firstNameEditingController.text = data['firstName'];
+    secondNameEditingController.text = data['secondName'];
+    emailEditingController.text = data['email'];
+    phoneEdititngController.text = data['phone'];
+
+    addressoneEdititngController.text = data['addressone'];
+
+    addresstwoEdititngController.text = data['addresstwo'];
+
+    cidEditingController.text = data['cid'];
+
+    return data;
   }
 }

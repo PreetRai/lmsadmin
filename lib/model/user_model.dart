@@ -103,6 +103,8 @@ class ContactsModel {
   String? addresstwo;
   String? contactby;
   String? employee;
+
+  String? employeename;
   ContactsModel({
     this.cid,
     this.email,
@@ -113,28 +115,30 @@ class ContactsModel {
     this.phone,
     this.contactby,
     this.employee,
+    this.employeename,
   });
 
   // receiving data from server
   factory ContactsModel.fromMap(map) {
     return ContactsModel(
-      cid: map['cid'],
-      email: map['email'],
-      firstName: map['firstName'],
-      secondName: map['secondName'],
-      addressone: map['addressone'],
-      addresstwo: map['addresstwo'],
-      phone: map['phone'],
-      contactby: map['contactby'],
-      employee: map['employee']
-    );
+        cid: map['cid'],
+        email: map['email'],
+        firstName: map['firstName'],
+        secondName: map['secondName'],
+        addressone: map['addressone'],
+        addresstwo: map['addresstwo'],
+        phone: map['phone'],
+        contactby: map['contactby'],
+        employee: map['employee'],
+        employeename: map['employeename']);
   }
 
   // sending data to our server
   Map<String, dynamic> toMap() {
     return {
-      'employee':employee,
-      'contactby':contactby,
+      'employeename': employeename,
+      'employee': employee,
+      'contactby': contactby,
       'cid': cid,
       'email': email,
       'firstName': firstName,

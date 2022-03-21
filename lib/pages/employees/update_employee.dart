@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lmsadmin/pages/employees/employees.dart';
@@ -18,7 +17,6 @@ class Updateemployeedetails extends StatefulWidget {
 
 class _UpdateemployeedetailsState extends State<Updateemployeedetails> {
   DateTime selectedDate = DateTime.now();
-  final _auth = FirebaseAuth.instance;
   String? errorMessage;
   final _empformKey = GlobalKey<FormState>();
   final firstNameEditingController = TextEditingController();

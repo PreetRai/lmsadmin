@@ -17,7 +17,6 @@ class Employeedetails extends StatefulWidget {
 
 class _EmployeedetailsState extends State<Employeedetails> {
   String buttonText = 'Add Employees';
-  bool isVisible = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,20 +34,16 @@ class _EmployeedetailsState extends State<Employeedetails> {
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
                         builder: (context) => const AddEmployee()));
                   }),
-                  child: Text('Add Employees'),
+                  child: const Text('Add Employees'),
                 ),
               ),
-              Visibility(
-                visible: isVisible,
-                replacement: const AddEmployee(),
-                child: Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: const [
-                      EmployeeNames(),
-                      DisplayEmpDetails(),
-                    ],
-                  ),
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: const [
+                    EmployeeNames(),
+                    DisplayEmpDetails(),
+                  ],
                 ),
               )
             ],

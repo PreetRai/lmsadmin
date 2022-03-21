@@ -46,7 +46,7 @@ class _MyAppState extends State<MyApp> {
       routes: <String, WidgetBuilder>{
         '/dashboard': (BuildContext context) => const DashBoard(),
         '/employees': (BuildContext context) => const Employeedetails(),
-        '/contacts': (BuildContext context) => const Contacts(),
+        '/contacts': (BuildContext context) => const Contactsdetails(),
         '/opportunities': (BuildContext context) => const Opportunities(),
         '/settings': (BuildContext context) => const UserSettings(),
         '/Login': (BuildContext context) => const LoginPage(),

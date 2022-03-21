@@ -61,10 +61,10 @@ class _DashBoardState extends State<DashBoard> {
                       headerTitle: 'Dashboard',
                       addButton: addbutton,
                     ),
-                    const Text('Welcome'),
-                    const SizedBox(
-                      height: 10,
-                    ),
+                    Center(
+                      child: Text(
+                          '${loggedInUser.firstName} ${loggedInUser.secondName}'),
+                    )
                   ],
                 ),
               );
@@ -73,7 +73,6 @@ class _DashBoardState extends State<DashBoard> {
 
   checkadmin(bool? isAdmin) async {
     if (isAdmin == false) {
-      print(isAdmin);
       Fluttertoast.showToast(msg: "You are not an Admin");
       await FirebaseAuth.instance.signOut();
       Navigator.of(context).pushReplacement(
