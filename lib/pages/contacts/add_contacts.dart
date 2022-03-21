@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lmsadmin/model/user_model.dart';
 import 'package:lmsadmin/pages/contacts/contacts.dart';
-import 'package:lmsadmin/pages/employees/employees.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../widgets/app_bar.dart';
@@ -518,9 +517,18 @@ class _AddContactsState extends State<AddContacts> {
           .collection('Employees')
           .doc(selectedName)
           .get();
-      contactsModel.employee = selectedName;
-      contactsModel.employeename =
-          '${result['firstName']} ${result['secondName']}';
+
+      if (selectedName == null) {
+        contactsModel.employee = null;
+
+        contactsModel.employeename = 'None';
+      } else {
+        contactsModel.employee = selectedName;
+
+        contactsModel.employeename =
+            '${result['firstName']} ${result['secondName']}';
+      }
+
       contactsModel.contactby = contactbydropdownvalue;
       contactsModel.cid = cid;
       contactsModel.email = emailEditingController.text;

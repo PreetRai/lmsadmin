@@ -172,7 +172,7 @@ class _DisplayConDetailsState extends State<DisplayConDetails> {
                                               child: SizedBox(
                                                   width: 150,
                                                   child:
-                                                      Text('${employeename}'))),
+                                                      Text(employeename))),
                                         ),
                                         const Expanded(child: SizedBox()),
                                         SizedBox(

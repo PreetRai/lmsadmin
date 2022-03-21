@@ -524,8 +524,18 @@ class _UpdateContact extends State<UpdateContact> {
           .collection('Employees')
           .doc(selectedName)
           .get();
-      contactsModel.employee = selectedName;
-      contactsModel.employeename = '${result['firstName']} ${result['secondName']}';
+
+      if (selectedName == null) {
+        contactsModel.employee = null;
+
+        contactsModel.employeename = 'None';
+      } else {
+        contactsModel.employee = selectedName;
+
+        contactsModel.employeename =
+            '${result['firstName']} ${result['secondName']}';
+      }
+
       contactsModel.contactby = contactbydropdownvalue;
 
       contactsModel.employee = selectedName;

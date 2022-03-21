@@ -20,13 +20,6 @@ class _ContactNamesState extends State<ContactNames> {
       flex: 1,
       child: Column(
         children: [
-          const Padding(
-            padding: EdgeInsets.all(10),
-            child: Text(
-              'Contacts',
-              style: TextStyle(fontSize: 15),
-            ),
-          ),
           SearchInput(
               textController: searctexteditingcontroller, hintText: "Search"),
           Expanded(
