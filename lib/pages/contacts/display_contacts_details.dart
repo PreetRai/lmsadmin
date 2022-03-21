@@ -55,179 +55,180 @@ class _DisplayConDetailsState extends State<DisplayConDetails> {
                             children: [
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: Card(
-                                  elevation: 10,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: SizedBox(
-                                                height: 90,
-                                                child: Image.asset(
-                                                  'assets/images/jh.png',
-                                                  fit: BoxFit.fill,
-                                                ),
-                                              ),
-                                            ),
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
-                                                  child: Text(
-                                                    '${details['firstName']} ${details['secondName']}',
-                                                    style: const TextStyle(
-                                                        fontSize: 20),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                        const Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Text('Email :- ',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold)),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Flexible(
-                                            child: SizedBox(
-                                                child: Text(
-                                              '${details['email']}',
-                                            )),
-                                          ),
-                                        ),
-                                        const Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Text('Mobile no. :- ',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold)),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Text('${details['phone']}'),
-                                        ),
-                                        const Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Text('Address Line 1:- ',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold)),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Flexible(
-                                              child: SizedBox(
-                                                  width: 150,
-                                                  child: Text(
-                                                      '${details['addressone']}'))),
-                                        ),
-                                        const Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Text('Address Line 2:- ',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold)),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Flexible(
-                                              child: SizedBox(
-                                                  width: 150,
-                                                  child: Text(
-                                                      '${details['addresstwo']}'))),
-                                        ),
-                                        const Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Text('Contact By:- ',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold)),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Flexible(
-                                              child: SizedBox(
-                                                  width: 150,
-                                                  child: Text(
-                                                      '${details['contactby']}'))),
-                                        ),
-                                        const Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Text('Employee :- ',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold)),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Flexible(
-                                              child: SizedBox(
-                                                  width: 150,
-                                                  child:
-                                                      Text(employeename))),
-                                        ),
-                                        const Expanded(child: SizedBox()),
-                                        SizedBox(
-                                          width: 300,
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
+                                child: SizedBox(
+                                  width: 350,
+                                  child: Card(
+                                    elevation: 10,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
                                             children: [
                                               Padding(
                                                 padding:
-                                                    const EdgeInsets.all(2.0),
-                                                child: ElevatedButton(
-                                                    onPressed: () {
-                                                      String cid =
-                                                          details['cid'];
-                                                      Navigator.of(context)
-                                                          .pushReplacement(
-                                                              MaterialPageRoute(
-                                                                  builder:
-                                                                      (context) =>
-                                                                          UpdateContact(
-                                                                            cid:
-                                                                                cid,
-                                                                          )));
-                                                    },
-                                                    child:
-                                                        const Text('Update')),
+                                                    const EdgeInsets.all(8.0),
+                                                child: SizedBox(
+                                                  height: 90,
+                                                  child: Image.asset(
+                                                    'assets/images/jh.png',
+                                                    fit: BoxFit.fill,
+                                                  ),
+                                                ),
                                               ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.all(2.0),
-                                                child: ElevatedButton(
-                                                    style: ElevatedButton
-                                                        .styleFrom(
-                                                            primary:
-                                                                Colors.red),
-                                                    onPressed: () {
-                                                      setState(() {
-                                                        FirebaseFirestore
-                                                            .instance
-                                                            .collection(
-                                                                "Contacts")
-                                                            .doc(details['cid'])
-                                                            .delete();
-                                                        DisplayConDetails
-                                                            .cid.value = "";
-                                                      });
-                                                    },
-                                                    child:
-                                                        const Text('Delete')),
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: Text(
+                                                      '${details['firstName']} ${details['secondName']}',
+                                                      style: const TextStyle(
+                                                          fontSize: 20),
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
                                             ],
                                           ),
-                                        )
-                                      ],
+                                          const Padding(
+                                            padding: EdgeInsets.all(8.0),
+                                            child: Text('Email :- ',
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Flexible(
+                                              child: SizedBox(
+                                                  child: Text(
+                                                '${details['email']}',
+                                              )),
+                                            ),
+                                          ),
+                                          const Padding(
+                                            padding: EdgeInsets.all(8.0),
+                                            child: Text('Mobile no. :- ',
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text('${details['phone']}'),
+                                          ),
+                                          const Padding(
+                                            padding: EdgeInsets.all(8.0),
+                                            child: Text('Address Line 1:- ',
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Flexible(
+                                                child: SizedBox(
+                                                    width: 150,
+                                                    child: Text(
+                                                        '${details['addressone']}'))),
+                                          ),
+                                          const Padding(
+                                            padding: EdgeInsets.all(8.0),
+                                            child: Text('Address Line 2:- ',
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Flexible(
+                                                child: SizedBox(
+                                                    width: 150,
+                                                    child: Text(
+                                                        '${details['addresstwo']}'))),
+                                          ),
+                                          const Padding(
+                                            padding: EdgeInsets.all(8.0),
+                                            child: Text('Contact By:- ',
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Flexible(
+                                                child: SizedBox(
+                                                    width: 150,
+                                                    child: Text(
+                                                        '${details['contactby']}'))),
+                                          ),
+                                          const Padding(
+                                            padding: EdgeInsets.all(8.0),
+                                            child: Text('Employee :- ',
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Flexible(
+                                                child: SizedBox(
+                                                    width: 150,
+                                                    child: Text(employeename))),
+                                          ),
+                                          const Expanded(child: SizedBox()),
+                                          SizedBox(
+                                            width: double.infinity,
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(2.0),
+                                              child: ElevatedButton(
+                                                  onPressed: () {
+                                                    String cid = details['cid'];
+                                                    Navigator.of(context)
+                                                        .pushReplacement(
+                                                            MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        UpdateContact(
+                                                                          cid:
+                                                                              cid,
+                                                                        )));
+                                                  },
+                                                  child: const Text('Update')),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: double.infinity,
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(2.0),
+                                              child: ElevatedButton(
+                                                  style:
+                                                      ElevatedButton.styleFrom(
+                                                          primary: Colors.red),
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      FirebaseFirestore.instance
+                                                          .collection(
+                                                              "Contacts")
+                                                          .doc(details['cid'])
+                                                          .delete();
+                                                      DisplayConDetails
+                                                          .cid.value = "";
+                                                    });
+                                                  },
+                                                  child: const Text('Delete')),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),

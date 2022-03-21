@@ -49,154 +49,155 @@ class _DisplayEmpDetailsState extends State<DisplayEmpDetails> {
                             children: [
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: Card(
-                                  elevation: 10,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: SizedBox(
-                                                height: 90,
-                                                child: Image.asset(
-                                                  'assets/images/jh.png',
-                                                  fit: BoxFit.fill,
-                                                ),
-                                              ),
-                                            ),
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
-                                                  child: Text(
-                                                    '${details['firstName']} ${details['secondName']}',
-                                                    style: const TextStyle(
-                                                        fontSize: 20),
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
-                                                  child: Text(
-                                                      '${details['jobtitle']}'),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                        const Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Text('Date of joining :- ',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold)),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child:
-                                              Text('${details['joiningdate']}'),
-                                        ),
-                                        const Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Text('Email :- ',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold)),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Flexible(
-                                            child: SizedBox(
-                                                child: Text(
-                                              '${details['email']}',
-                                            )),
-                                          ),
-                                        ),
-                                        const Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Text('Mobile no. :- ',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold)),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Text('${details['phone']}'),
-                                        ),
-                                        const Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Text('Address :- ',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold)),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Flexible(
-                                              child: SizedBox(
-                                                  width: 150,
-                                                  child: Text(
-                                                      '${details['address']}'))),
-                                        ),
-                                  const       Expanded(child: SizedBox()),
-                                        SizedBox(
-                                          width: 300,
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
+                                child: SizedBox(
+                                  width: 350,
+                                  child: Card(
+                                    elevation: 10,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
                                             children: [
                                               Padding(
                                                 padding:
-                                                    const EdgeInsets.all(2.0),
-                                                child: ElevatedButton(
-                                                    onPressed: () {
-                                                      String uid =
-                                                          details['uid'];
-                                                      Navigator.of(context)
-                                                          .pushReplacement(
-                                                              MaterialPageRoute(
-                                                                  builder:
-                                                                      (context) =>
-                                                                          Updateemployeedetails(
-                                                                            uid:
-                                                                                uid,
-                                                                          )));
-                                                    },
-                                                    child:
-                                                        const Text('Update')),
+                                                    const EdgeInsets.all(8.0),
+                                                child: SizedBox(
+                                                  height: 90,
+                                                  child: Image.asset(
+                                                    'assets/images/jh.png',
+                                                    fit: BoxFit.fill,
+                                                  ),
+                                                ),
                                               ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.all(2.0),
-                                                child: ElevatedButton(
-                                                    style: ElevatedButton
-                                                        .styleFrom(
-                                                            primary:
-                                                                Colors.red),
-                                                    onPressed: () {
-                                                      setState(() {
-                                                        FirebaseFirestore
-                                                            .instance
-                                                            .collection(
-                                                                "Employees")
-                                                            .doc(details['uid'])
-                                                            .delete();
-                                                        DisplayEmpDetails
-                                                            .uid.value = "";
-                                                      });
-                                                    },
-                                                    child:
-                                                        const Text('Delete')),
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: Text(
+                                                      '${details['firstName']} ${details['secondName']}',
+                                                      style: const TextStyle(
+                                                          fontSize: 20),
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: Text(
+                                                        '${details['jobtitle']}'),
+                                                  ),
+                                                ],
                                               ),
                                             ],
                                           ),
-                                        )
-                                      ],
+                                          const Padding(
+                                            padding: EdgeInsets.all(8.0),
+                                            child: Text('Date of joining :- ',
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
+                                                '${details['joiningdate']}'),
+                                          ),
+                                          const Padding(
+                                            padding: EdgeInsets.all(8.0),
+                                            child: Text('Email :- ',
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Flexible(
+                                              child: SizedBox(
+                                                  child: Text(
+                                                '${details['email']}',
+                                              )),
+                                            ),
+                                          ),
+                                          const Padding(
+                                            padding: EdgeInsets.all(8.0),
+                                            child: Text('Mobile no. :- ',
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text('${details['phone']}'),
+                                          ),
+                                          const Padding(
+                                            padding: EdgeInsets.all(8.0),
+                                            child: Text('Address :- ',
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Flexible(
+                                                child: SizedBox(
+                                                    width: 150,
+                                                    child: Text(
+                                                        '${details['address']}'))),
+                                          ),
+                                          const Expanded(child: SizedBox()),
+                                          SizedBox(
+                                            width: double.infinity,
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(2.0),
+                                              child: ElevatedButton(
+                                                  onPressed: () {
+                                                    String uid = details['uid'];
+                                                    Navigator.of(context)
+                                                        .pushReplacement(
+                                                            MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        Updateemployeedetails(
+                                                                          uid:
+                                                                              uid,
+                                                                        )));
+                                                  },
+                                                  child: const Text('Update')),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: double.infinity,
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(2.0),
+                                              child: ElevatedButton(
+                                                  style:
+                                                      ElevatedButton.styleFrom(
+                                                          primary: Colors.red),
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      FirebaseFirestore.instance
+                                                          .collection(
+                                                              "Employees")
+                                                          .doc(details['uid'])
+                                                          .delete();
+                                                      DisplayEmpDetails
+                                                          .uid.value = "";
+                                                    });
+                                                  },
+                                                  child: const Text('Delete')),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
