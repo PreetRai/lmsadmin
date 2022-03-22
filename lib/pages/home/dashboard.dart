@@ -55,17 +55,20 @@ class _DashBoardState extends State<DashBoard> {
             future: checkadmin(loggedinemployee.isAdmin),
             builder: (context, snap) {
               return Center(
-                child: Column(
-                  children: [
-                    Header(
-                      headerTitle: 'Dashboard',
-                      addButton: addbutton,
-                    ),
-                    Center(
-                      child: Text(
-                          '${loggedInUser.firstName} ${loggedInUser.secondName}'),
-                    )
-                  ],
+                child: Expanded(
+                  child: Column(
+                    children: [
+                      Header(
+                        headerTitle: 'Dashboard',
+                        addButton: addbutton,
+                      ),
+                      Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                            'Hello, ${loggedInUser.firstName} ${loggedInUser.secondName}'),
+                      )
+                    ],
+                  ),
                 ),
               );
             }));

@@ -478,15 +478,12 @@ class _UpdateContact extends State<UpdateContact> {
                                                             primary:
                                                                 Colors.red),
                                                     onPressed: () {
-                                                      // Navigator.of(context)
-                                                      //     .pushReplacement(
-                                                      //         MaterialPageRoute(
-                                                      //             builder:
-                                                      //                 (context) =>
-                                                      //                     const Employeedetails()));
-                                                      // print(_auth
-                                                      //     .currentUser!.email);
-                                                      getnamecount();
+                                                      Navigator.of(context)
+                                                          .pushReplacement(
+                                                              MaterialPageRoute(
+                                                                  builder:
+                                                                      (context) =>
+                                                                          const Contactsdetails()));
                                                     },
                                                     child:
                                                         const Text('Cancel')),
@@ -529,10 +526,11 @@ class _UpdateContact extends State<UpdateContact> {
         contactsModel.employeename =
             '${result['firstName']} ${result['secondName']}';
       }
-
-      contactsModel.contactby = contactbydropdownvalue;
-
-      contactsModel.employee = selectedName;
+      if (contactbydropdownvalue == null) {
+        contactsModel.contactby = 'Walk-in';
+      } else {
+        contactsModel.contactby = contactbydropdownvalue;
+      }
 
       contactsModel.cid = cid;
       contactsModel.email = emailEditingController.text;
@@ -549,21 +547,6 @@ class _UpdateContact extends State<UpdateContact> {
       Fluttertoast.showToast(msg: "Contact Updated successfully :) ");
       _empformKey.currentState?.reset();
     }
-  }
-
-  getnamecount() async {
-    final QuerySnapshot result =
-        await FirebaseFirestore.instance.collection('Contacts').get();
-    final List<DocumentSnapshot> document = result.docs;
-    int x = document.length.toInt();
-
-    var employees = [];
-
-    for (var i = 0; i <= x - 1; i++) {
-      employees.add(
-          '${document.elementAt(i).get('firstName')} ${document.elementAt(i).get('secondName')}');
-    }
-    return employees.toList();
   }
 
   Future<Map> getuser(String newValue) async {
