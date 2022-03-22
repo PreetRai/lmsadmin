@@ -381,7 +381,14 @@ class _UpdateContact extends State<UpdateContact> {
                                             ),
                                             Visibility(
                                               visible: visible,
-                                              child:
+                                              maintainState: true,
+                                              child: Row(
+                                                children: [
+                                                  const Padding(
+                                                    padding:
+                                                        EdgeInsets.all(8.0),
+                                                    child: Text('Employee : '),
+                                                  ),
                                                   StreamBuilder<QuerySnapshot>(
                                                       stream: FirebaseFirestore
                                                           .instance
@@ -392,80 +399,67 @@ class _UpdateContact extends State<UpdateContact> {
                                                           (context, snapshot) {
                                                         int x = snapshot
                                                             .data!.docs.length;
-                                                        if (!snapshot.hasData) {
+                                                        if (snapshot
+                                                                .connectionState ==
+                                                            ConnectionState
+                                                                .waiting) {
                                                           return const CircularProgressIndicator();
                                                         } else {
-                                                          switch (snapshot
-                                                              .connectionState) {
-                                                            case ConnectionState
-                                                                .waiting:
-                                                              return const CircularProgressIndicator();
+                                                          List<DropdownMenuItem>
+                                                              employeNamesItems =
+                                                              [];
+                                                          for (int i = 0;
+                                                              i < x;
+                                                              i++) {
+                                                            DocumentSnapshot
+                                                                snap = snapshot
+                                                                    .data!
+                                                                    .docs[i];
 
-                                                            default:
-                                                              List<DropdownMenuItem>
-                                                                  employeNamesItems =
-                                                                  [];
-                                                              for (int i = 0;
-                                                                  i < x;
-                                                                  i++) {
-                                                                DocumentSnapshot
-                                                                    snap =
-                                                                    snapshot
-                                                                        .data!
-                                                                        .docs[i];
-
-                                                                employeNamesItems
-                                                                    .add(
-                                                                        DropdownMenuItem(
-                                                                  child: Text(
-                                                                    "${snap['firstName']} ${snap['secondName']}",
-                                                                  ),
-                                                                  value:
-                                                                      "${snap['uid']}",
-                                                                ));
-                                                              }
-                                                              return Padding(
-                                                                  padding:
-                                                                      const EdgeInsets
-                                                                              .all(
-                                                                          8.0),
-                                                                  child: Row(
-                                                                      children: [
-                                                                        const Padding(
-                                                                          padding:
-                                                                              EdgeInsets.all(8.0),
-                                                                          child:
-                                                                              Text('Employee : '),
-                                                                        ),
-                                                                        Padding(
-                                                                          padding:
-                                                                              const EdgeInsets.all(8.0),
-                                                                          child:
-                                                                              DropdownButton<dynamic>(
-                                                                            style:
-                                                                                const TextStyle(fontSize: 15),
-                                                                            hint:
-                                                                                const Text('Select Employee'),
-                                                                            icon:
-                                                                                const Icon(Icons.keyboard_arrow_down),
-                                                                            items:
-                                                                                employeNamesItems,
-                                                                            onChanged:
-                                                                                (employename) {
-                                                                              setState(() {
-                                                                                selectedName = employename;
-                                                                              });
-                                                                            },
-                                                                            value:
-                                                                                selectedName,
-                                                                          ),
-                                                                        )
-                                                                      ]));
+                                                            employeNamesItems.add(
+                                                                DropdownMenuItem(
+                                                              child: Text(
+                                                                "${snap['firstName']} ${snap['secondName']}",
+                                                              ),
+                                                              value:
+                                                                  "${snap['uid']}",
+                                                            ));
                                                           }
+                                                          return Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(8.0),
+                                                            child:
+                                                                DropdownButton<
+                                                                    dynamic>(
+                                                              style:
+                                                                  const TextStyle(
+                                                                      fontSize:
+                                                                          15),
+                                                              hint: const Text(
+                                                                  'Select Employee'),
+                                                              icon: const Icon(Icons
+                                                                  .keyboard_arrow_down),
+                                                              items:
+                                                                  employeNamesItems,
+                                                              onChanged:
+                                                                  (employename) {
+                                                                setState(() {
+                                                                  selectedName =
+                                                                      employename;
+                                                                });
+                                                              },
+                                                              value:
+                                                                  selectedName,
+                                                            ),
+                                                          );
                                                         }
                                                       }),
+                                                ],
+                                              ),
                                             ),
                                           ]),
+                                          Expanded(child: SizedBox()),
                                           Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.end,

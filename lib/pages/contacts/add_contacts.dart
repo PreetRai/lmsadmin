@@ -372,6 +372,7 @@ class _AddContactsState extends State<AddContacts> {
                                             ),
                                             Visibility(
                                               visible: visible,
+                                              maintainState: true,
                                               child:
                                                   StreamBuilder<QuerySnapshot>(
                                                       stream: FirebaseFirestore
