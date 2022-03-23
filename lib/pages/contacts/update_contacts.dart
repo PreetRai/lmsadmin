@@ -38,7 +38,7 @@ class _UpdateContact extends State<UpdateContact> {
     'Refference',
     'Scanning',
   ];
-  // ignore: prefer_typing_uninitialized_variables
+  // ignore: prefer_typing_uninitialized_variables, avoid_init_to_null
   var selectedName = null;
   String? employeenamesvalue;
 
@@ -369,6 +369,9 @@ class _UpdateContact extends State<UpdateContact> {
                                                           if (newValue ==
                                                               'Refference') {
                                                             visible = true;
+                                                          } else if (newValue ==
+                                                              'Scanning') {
+                                                            visible = true;
                                                           } else {
                                                             visible = false;
                                                           }
@@ -459,7 +462,7 @@ class _UpdateContact extends State<UpdateContact> {
                                               ),
                                             ),
                                           ]),
-                                          Expanded(child: SizedBox()),
+                                          const Expanded(child: SizedBox()),
                                           Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.end,

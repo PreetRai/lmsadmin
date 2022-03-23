@@ -149,3 +149,76 @@ class ContactsModel {
     };
   }
 }
+
+class PropertyModel {
+  String? cid;
+  String? pid;
+  String? addressone;
+  String? addresstwo;
+  String? category;
+  String? type;
+  String? subtype;
+  String? contractor;
+  String? architect;
+  String? supervisor;
+  String? details;
+  String? supervisorphn;
+  String? contractorphn;
+  String? architectphn;
+
+  PropertyModel(
+      {this.cid,
+      this.pid,
+      this.addressone,
+      this.addresstwo,
+      this.category,
+      this.type,
+      this.subtype,
+      this.contractor,
+      this.architect,
+      this.supervisor,
+      this.details,
+      this.architectphn,
+      this.contractorphn,
+      this.supervisorphn});
+
+  // receiving data from server
+  factory PropertyModel.fromMap(map) {
+    return PropertyModel(
+      cid: map['cid'],
+      pid: map['pid'],
+      category: map['category'],
+      type: map['type'],
+      subtype: map['subtype'],
+      addressone: map['addressone'],
+      addresstwo: map['addresstwo'],
+      contractor: map['contractor'],
+      architect: map['architect'],
+      supervisor: map['supervisor'],
+      details: map['details'],
+      architectphn: map['architectphn'],
+      contractorphn: map['contractorphn'],
+      supervisorphn: map['supervisorphn'],
+    );
+  }
+
+  // sending data to our server
+  Map<String, dynamic> toMap() {
+    return {
+      'cid': cid,
+      'pid': pid,
+      'category': category,
+      'type': type,
+      'subtype': subtype,
+      'addressone': addressone,
+      'addresstwo': addresstwo,
+      'contractor': contractor,
+      'architect': architect,
+      'supervisor': supervisor,
+      'details': details,
+      'architectphn': architectphn,
+      'contractorphn': contractorphn,
+      'supervisorphn': supervisorphn,
+    };
+  }
+}

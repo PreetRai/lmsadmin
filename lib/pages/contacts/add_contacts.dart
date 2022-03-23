@@ -40,6 +40,7 @@ class _AddContactsState extends State<AddContacts> {
     'Refference',
     'Scanning',
   ];
+  // ignore: prefer_typing_uninitialized_variables
   var selectedName;
   String? employeenamesvalue;
 
@@ -359,6 +360,9 @@ class _AddContactsState extends State<AddContacts> {
                                                               newValue!;
                                                           if (newValue ==
                                                               'Refference') {
+                                                            visible = true;
+                                                          } else if (newValue ==
+                                                              'Scanning') {
                                                             visible = true;
                                                           } else {
                                                             visible = false;

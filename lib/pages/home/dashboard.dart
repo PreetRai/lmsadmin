@@ -62,10 +62,14 @@ class _DashBoardState extends State<DashBoard> {
                         headerTitle: 'Dashboard',
                         addButton: addbutton,
                       ),
-                      Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                            'Hello, ${loggedInUser.firstName} ${loggedInUser.secondName}'),
+                      Expanded(
+                        child: SizedBox(
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                                'Hello, ${loggedInUser.firstName} ${loggedInUser.secondName}'),
+                          ),
+                        ),
                       )
                     ],
                   ),

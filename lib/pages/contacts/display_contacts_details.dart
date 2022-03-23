@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lmsadmin/pages/contacts/update_contacts.dart';
+import 'package:lmsadmin/pages/properties/property_details.dart';
 
 class DisplayConDetails extends StatefulWidget {
   static ValueNotifier<String> cid = ValueNotifier('');
@@ -43,6 +44,7 @@ class _DisplayConDetailsState extends State<DisplayConDetails> {
                         );
                       default:
                         Map details = snapshot.data!;
+                        // ignore: prefer_typing_uninitialized_variables
                         var employeename;
                         if (details['employee'] == null) {
                           employeename = 'none';
@@ -291,15 +293,7 @@ class _DisplayConDetailsState extends State<DisplayConDetails> {
                                   ),
                                 ),
                               ),
-                              const Expanded(
-                                child: SizedBox(
-                                  height: double.infinity,
-                                  child: Card(
-                                    elevation: 10,
-                                    child: Center(child: Text('data')),
-                                  ),
-                                ),
-                              )
+                              const PropertyDeatials(),
                             ],
                           ),
                         );
