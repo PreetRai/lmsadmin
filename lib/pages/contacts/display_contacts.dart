@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lmsadmin/pages/contacts/display_contacts_details.dart';
+import 'package:lmsadmin/pages/properties/property_tab.dart';
 
 import '../../widgets/search.dart';
 
@@ -90,6 +91,7 @@ class _ContactNamesState extends State<ContactNames> {
                                             onTap: () {
                                               DisplayConDetails.cid.value =
                                                   contacts['cid'].toString();
+                                              PropertTab.pid.value = "";
                                             },
                                             title: Text('${contacts['name']}'),
                                             subtitle: Column(

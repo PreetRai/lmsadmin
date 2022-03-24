@@ -41,6 +41,8 @@ class _PropertTabState extends State<PropertTab> {
         ),
         Expanded(
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
                 width: 460,
@@ -241,20 +243,16 @@ class _PropertTabState extends State<PropertTab> {
                       }),
                 ),
               ),
-              SizedBox(
-                width: 350,
-                height: 600,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+              Expanded(
+                child: SizedBox(
                   child: Card(
                       elevation: 5,
                       child: ValueListenableBuilder(
                           valueListenable: PropertTab.pid,
                           builder:
                               (BuildContext context, value, Widget? child) {
-                            print(value);
                             var visible = false;
-                            if (PropertTab.pid.value == '') {
+                            if (value == '') {
                               visible = false;
                             } else {
                               visible = true;
@@ -321,8 +319,8 @@ class _PropertTabState extends State<PropertTab> {
                                                     CrossAxisAlignment.start,
                                                 direction: Axis.horizontal,
                                                 children: [
-                                                  const Text('Category : '),
-                                                  Text('this is category')
+                                                  const Text('Type : '),
+                                                  Text('${details['type']}')
                                                 ],
                                               ),
                                             ),
@@ -335,8 +333,8 @@ class _PropertTabState extends State<PropertTab> {
                                                     CrossAxisAlignment.start,
                                                 direction: Axis.horizontal,
                                                 children: [
-                                                  const Text('Category : '),
-                                                  Text('this is category')
+                                                  const Text('Subtype : '),
+                                                  Text('${details['subtype']}')
                                                 ],
                                               ),
                                             ),
@@ -349,8 +347,10 @@ class _PropertTabState extends State<PropertTab> {
                                                     CrossAxisAlignment.start,
                                                 direction: Axis.horizontal,
                                                 children: [
-                                                  const Text('Category : '),
-                                                  Text('this is category')
+                                                  const Text(
+                                                      'Address Line 1 : '),
+                                                  Text(
+                                                      '${details['addressone']}')
                                                 ],
                                               ),
                                             ),
@@ -363,8 +363,10 @@ class _PropertTabState extends State<PropertTab> {
                                                     CrossAxisAlignment.start,
                                                 direction: Axis.horizontal,
                                                 children: [
-                                                  const Text('Category : '),
-                                                  Text('this is category')
+                                                  const Text(
+                                                      'Address Line 2 : '),
+                                                  Text(
+                                                      '${details['addresstwo']}')
                                                 ],
                                               ),
                                             ),
@@ -377,8 +379,9 @@ class _PropertTabState extends State<PropertTab> {
                                                     CrossAxisAlignment.start,
                                                 direction: Axis.horizontal,
                                                 children: [
-                                                  const Text('Category : '),
-                                                  Text('this is category')
+                                                  const Text('Contractor : '),
+                                                  Text(
+                                                      '${details['contractor']}')
                                                 ],
                                               ),
                                             ),
@@ -391,8 +394,10 @@ class _PropertTabState extends State<PropertTab> {
                                                     CrossAxisAlignment.start,
                                                 direction: Axis.horizontal,
                                                 children: [
-                                                  const Text('Category : '),
-                                                  Text('this is category')
+                                                  const Text(
+                                                      'Contractor Number : '),
+                                                  Text(
+                                                      '${details['contractorphn']}'),
                                                 ],
                                               ),
                                             ),
@@ -405,8 +410,13 @@ class _PropertTabState extends State<PropertTab> {
                                                     CrossAxisAlignment.start,
                                                 direction: Axis.horizontal,
                                                 children: [
-                                                  const Text('Category : '),
-                                                  Text('this is category')
+                                                  const Text(
+                                                      'Architectutre/Interior : '),
+                                                  Text(
+                                                      '${details['architect']}'),
+                                                  const SizedBox(
+                                                    width: 10,
+                                                  ),
                                                 ],
                                               ),
                                             ),
@@ -419,8 +429,10 @@ class _PropertTabState extends State<PropertTab> {
                                                     CrossAxisAlignment.start,
                                                 direction: Axis.horizontal,
                                                 children: [
-                                                  const Text('Category : '),
-                                                  Text('this is category')
+                                                  const Text(
+                                                      'Architectutre/Interior Number : '),
+                                                  Text(
+                                                      '${details['architectphn']}'),
                                                 ],
                                               ),
                                             ),
@@ -433,8 +445,12 @@ class _PropertTabState extends State<PropertTab> {
                                                     CrossAxisAlignment.start,
                                                 direction: Axis.horizontal,
                                                 children: [
-                                                  const Text('Category : '),
-                                                  Text('this is category')
+                                                  const Text('Supervisor : '),
+                                                  Text(
+                                                      '${details['supervisor']}'),
+                                                  const SizedBox(
+                                                    width: 10,
+                                                  ),
                                                 ],
                                               ),
                                             ),
@@ -447,8 +463,10 @@ class _PropertTabState extends State<PropertTab> {
                                                     CrossAxisAlignment.start,
                                                 direction: Axis.horizontal,
                                                 children: [
-                                                  const Text('Category : '),
-                                                  Text('this is category')
+                                                  const Text(
+                                                      'Supervisor Number : '),
+                                                  Text(
+                                                      '${details['supervisorphn']}'),
                                                 ],
                                               ),
                                             ),
@@ -461,8 +479,9 @@ class _PropertTabState extends State<PropertTab> {
                                                     CrossAxisAlignment.start,
                                                 direction: Axis.horizontal,
                                                 children: [
-                                                  const Text('Category : '),
-                                                  Text('this is category')
+                                                  const Text(
+                                                      'Property Details : '),
+                                                  Text('${details['details']}')
                                                 ],
                                               ),
                                             ),
@@ -515,7 +534,6 @@ class _PropertTabState extends State<PropertTab> {
     var collection = FirebaseFirestore.instance.collection('Property');
     var docSnapshot = await collection.doc(pid).get();
     Map<dynamic, dynamic> data = docSnapshot.data()!;
-
     return data;
   }
 }
