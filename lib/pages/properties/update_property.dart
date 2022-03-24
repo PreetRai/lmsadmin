@@ -3,18 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lmsadmin/model/user_model.dart';
 import 'package:lmsadmin/pages/contacts/contacts.dart';
-import 'package:lmsadmin/pages/contacts/display_contacts_details.dart';
-import 'package:uuid/uuid.dart';
 
 import '../../widgets/app_bar.dart';
 import '../../widgets/app_drawer.dart';
 import '../../widgets/header.dart';
 
-class AddProperties extends StatefulWidget {
-  const AddProperties({Key? key}) : super(key: key);
+class UpdateProperty extends StatefulWidget {
+final  String pid;
+  final String cid;
+  const UpdateProperty({Key? key, required this.pid, required this.cid})
+      : super(key: key);
 
   @override
-  _AddPropertiesState createState() => _AddPropertiesState();
+  _UpdatePropertyState createState() => _UpdatePropertyState();
 }
 
 enum Propertycategory { regular, premium }
@@ -23,7 +24,7 @@ enum PropertyType { retail, project }
 
 enum PropertySubType { flat, bunglow, renovation }
 
-class _AddPropertiesState extends State<AddProperties> {
+class _UpdatePropertyState extends State<UpdateProperty> {
   TextEditingController categoryEditingController = TextEditingController();
   TextEditingController propertyTypeEditingController = TextEditingController();
   TextEditingController propertySubtypeEditingController =
@@ -53,6 +54,7 @@ class _AddPropertiesState extends State<AddProperties> {
 
   @override
   Widget build(BuildContext context) {
+    getuser(widget.cid, widget.pid);
     //First name
     final contractorNameField = TextFormField(
         controller: contractorNameEditingController,
@@ -536,7 +538,12 @@ class _AddPropertiesState extends State<AddProperties> {
                                       padding: const EdgeInsets.all(8.0),
                                       child: ElevatedButton(
                                           onPressed: () {
-                                            addProperties();
+                                            addProperties(
+                                                widget.cid, widget.pid);
+                                            Navigator.of(context).pushReplacement(
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const Contactsdetails()));
                                           },
                                           child: const Text('Add')),
                                     ),
@@ -567,12 +574,10 @@ class _AddPropertiesState extends State<AddProperties> {
             ])));
   }
 
-  void addProperties() async {
+  void addProperties(cid, pid) async {
     if (_addcontactKey.currentState!.validate()) {
       FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-      String cid = DisplayConDetails.cid.value;
-      Uuid uuid = const Uuid();
-      String pid = uuid.v4();
+
       PropertyModel propertyModel = PropertyModel();
       // writing all the values
       propertyModel.cid = cid;
@@ -600,10 +605,28 @@ class _AddPropertiesState extends State<AddProperties> {
           .doc(pid)
           .set(propertyModel.toMap());
 
-      Fluttertoast.showToast(msg: "Contact added successfully :) ");
+      Fluttertoast.showToast(msg: "Contact Updated successfully :) ");
       _addcontactKey.currentState?.reset();
       Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => const Contactsdetails()));
     }
+  }
+
+  Future<Map> getuser(String cid, pid) async {
+    
+    var collection = FirebaseFirestore.instance.collection('Property');
+    var docSnapshot = await collection.doc(pid).get();
+    Map<dynamic, dynamic> data = docSnapshot.data()!;
+
+    addressOneEditingController.text = data['addressone'];
+    addressTwoEditingController.text = data['addresstwo'];
+    contractorNameEditingController.text = data['contractor'];
+    contractorNumEditingController.text = data['contractorphn'];
+    supervisorNameEditingController.text = data['supervisor'];
+    supervisorNumEditingController.text = data['supervisorphn'];
+    architectInteriorNameEditingController.text = data['architect'];
+    archinteriorNumEditingController.text = data['architectphn'];
+    propertyDetailsEditingController.text = data['details'];
+    return data;
   }
 }

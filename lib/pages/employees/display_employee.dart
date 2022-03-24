@@ -39,9 +39,9 @@ class _EmployeeNamesState extends State<EmployeeNames> {
                         AsyncSnapshot<dynamic> snapshot) {
                       switch (snapshot.connectionState) {
                         case ConnectionState.none:
-                          return const Text('fetching...');
+                          return const CircularProgressIndicator();
                         case ConnectionState.waiting:
-                          return const Text('fetching...');
+                          return const CircularProgressIndicator();
 
                         case ConnectionState.active:
 
