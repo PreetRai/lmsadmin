@@ -9,7 +9,7 @@ import '../../widgets/app_drawer.dart';
 import '../../widgets/header.dart';
 
 class UpdateProperty extends StatefulWidget {
-final  String pid;
+  final String pid;
   final String cid;
   const UpdateProperty({Key? key, required this.pid, required this.cid})
       : super(key: key);
@@ -434,7 +434,7 @@ class _UpdatePropertyState extends State<UpdateProperty> {
                           child: Padding(
                             padding: EdgeInsets.all(15),
                             child: Text(
-                              'Add Property',
+                              'Update Property',
                               style: TextStyle(
                                 fontSize: 15,
                               ),
@@ -545,7 +545,7 @@ class _UpdatePropertyState extends State<UpdateProperty> {
                                                     builder: (context) =>
                                                         const Contactsdetails()));
                                           },
-                                          child: const Text('Add')),
+                                          child: const Text('Update')),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.all(2.0),
@@ -613,7 +613,6 @@ class _UpdatePropertyState extends State<UpdateProperty> {
   }
 
   Future<Map> getuser(String cid, pid) async {
-    
     var collection = FirebaseFirestore.instance.collection('Property');
     var docSnapshot = await collection.doc(pid).get();
     Map<dynamic, dynamic> data = docSnapshot.data()!;

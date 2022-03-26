@@ -17,7 +17,7 @@ class _PropertyListState extends State<PropertyList> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 460,
+      width: 500,
       child: Expanded(
         child: FutureBuilder(
             future: getpropertycount(),
