@@ -26,7 +26,7 @@ class _ContactNamesState extends State<ContactNames> {
               textController: searctexteditingcontroller, hintText: "Search"),
           Expanded(
             child: ValueListenableBuilder(
-                valueListenable: condetails,
+                valueListenable: ContactNames.refresh,
                 builder: (BuildContext context, String value, Widget? child) {
                   return FutureBuilder(
                     future: getcount(),

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:lmsadmin/pages/contacts/display_contacts.dart';
 import 'package:lmsadmin/pages/contacts/update_contacts.dart';
 import 'package:lmsadmin/pages/properties/property_details.dart';
 
@@ -278,6 +279,11 @@ class _DisplayConDetailsState extends State<DisplayConDetails> {
                                                                 "Contacts")
                                                             .doc(details['cid'])
                                                             .delete();
+                                                        DisplayConDetails
+                                                            .cid.value = "";
+                                                        ContactNames
+                                                                .refresh.value =
+                                                            "${details['cid']}";
                                                       });
                                                     },
                                                     child:
