@@ -14,6 +14,7 @@ class ContactNames extends StatefulWidget {
 }
 
 class _ContactNamesState extends State<ContactNames> {
+  var condetails = DisplayConDetails.cid;
   @override
   Widget build(BuildContext context) {
     TextEditingController searctexteditingcontroller = TextEditingController();
@@ -25,7 +26,7 @@ class _ContactNamesState extends State<ContactNames> {
               textController: searctexteditingcontroller, hintText: "Search"),
           Expanded(
             child: ValueListenableBuilder(
-                valueListenable: DisplayConDetails.cid,
+                valueListenable: condetails,
                 builder: (BuildContext context, String value, Widget? child) {
                   return FutureBuilder(
                     future: getcount(),
@@ -33,12 +34,17 @@ class _ContactNamesState extends State<ContactNames> {
                         AsyncSnapshot<dynamic> snapshot) {
                       switch (snapshot.connectionState) {
                         case ConnectionState.none:
-                          return const Text('fetching...');
+                          return Column(
+                            children: [CircularProgressIndicator()],
+                          );
                         case ConnectionState.waiting:
-                          return const Text('fetching...');
-
+                          return Column(
+                            children: [CircularProgressIndicator()],
+                          );
                         case ConnectionState.active:
-
+                          return Column(
+                            children: [CircularProgressIndicator()],
+                          );
                         case ConnectionState.done:
                           return ListView.builder(
                             itemCount: snapshot.data,
@@ -49,7 +55,10 @@ class _ContactNamesState extends State<ContactNames> {
                                       (context, AsyncSnapshot<Map> snapshot) {
                                     switch (snapshot.connectionState) {
                                       case ConnectionState.none:
-                                        return const Text('data');
+                                        return const Card(
+                                            child: ListTile(
+                                                leading:
+                                                    CircularProgressIndicator()));
                                       case ConnectionState.waiting:
                                         return const Card(
                                             child: ListTile(
@@ -57,39 +66,17 @@ class _ContactNamesState extends State<ContactNames> {
                                                     CircularProgressIndicator()));
                                       case ConnectionState.active:
                                         Map contacts = snapshot.data!;
-                                        return Card(
-                                          child: ListTile(
-                                            onTap: () {
-                                              DisplayConDetails.cid.value =
-                                                  contacts['cid'].toString();
-                                            },
-                                            title: Text('${contacts['name']}'),
-                                            subtitle: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  '${contacts['email']}',
-                                                  style: const TextStyle(
-                                                      fontSize: 10),
-                                                ),
-                                                Text(
-                                                  '${contacts['phone']}',
-                                                  style: const TextStyle(
-                                                      fontSize: 10),
-                                                )
-                                              ],
-                                            ),
-                                            leading:
-                                                const FlutterLogo(size: 50),
-                                          ),
-                                        );
+                                        return const Card(
+                                            child: ListTile(
+                                                leading:
+                                                    CircularProgressIndicator()));
+
                                       case ConnectionState.done:
                                         Map contacts = snapshot.data!;
                                         return Card(
                                           child: ListTile(
                                             onTap: () {
-                                              DisplayConDetails.cid.value =
+                                              condetails.value =
                                                   contacts['cid'].toString();
                                               PropertTab.pid.value = "";
                                             },

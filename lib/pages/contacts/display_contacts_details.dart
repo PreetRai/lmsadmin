@@ -278,8 +278,6 @@ class _DisplayConDetailsState extends State<DisplayConDetails> {
                                                                 "Contacts")
                                                             .doc(details['cid'])
                                                             .delete();
-                                                        DisplayConDetails
-                                                            .cid.value = "";
                                                       });
                                                     },
                                                     child:
