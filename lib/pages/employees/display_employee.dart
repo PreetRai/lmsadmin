@@ -31,7 +31,7 @@ class _EmployeeNamesState extends State<EmployeeNames> {
               textController: searctexteditingcontroller, hintText: "Search"),
           Expanded(
             child: ValueListenableBuilder(
-                valueListenable: DisplayEmpDetails.uid,
+                valueListenable: EmployeeNames.refresh,
                 builder: (BuildContext context, String value, Widget? child) {
                   return FutureBuilder(
                     future: getcount(),
@@ -39,12 +39,15 @@ class _EmployeeNamesState extends State<EmployeeNames> {
                         AsyncSnapshot<dynamic> snapshot) {
                       switch (snapshot.connectionState) {
                         case ConnectionState.none:
-                          return const CircularProgressIndicator();
+                          return Column(
+                              children: [CircularProgressIndicator()]);
                         case ConnectionState.waiting:
-                          return const CircularProgressIndicator();
+                          return Column(
+                              children: [CircularProgressIndicator()]);
 
                         case ConnectionState.active:
-
+                          return Column(
+                              children: [CircularProgressIndicator()]);
                         case ConnectionState.done:
                           return ListView.builder(
                             itemCount: snapshot.data,

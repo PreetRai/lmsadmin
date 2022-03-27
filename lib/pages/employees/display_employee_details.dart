@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:lmsadmin/api/send_uid_to_employee.dart';
+import 'package:lmsadmin/pages/employees/display_employee.dart';
 import 'package:lmsadmin/pages/employees/update_employee.dart';
 
 class DisplayEmpDetails extends StatefulWidget {
@@ -191,9 +193,33 @@ class _DisplayEmpDetailsState extends State<DisplayEmpDetails> {
                                                           .delete();
                                                       DisplayEmpDetails
                                                           .uid.value = "";
+                                                      EmployeeNames
+                                                              .refresh.value =
+                                                          "${details['uid']}";
                                                     });
                                                   },
                                                   child: const Text('Delete')),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: double.infinity,
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(2.0),
+                                              child: ElevatedButton(
+                                                  style:
+                                                      ElevatedButton.styleFrom(
+                                                          primary:
+                                                              Colors.green),
+                                                  onPressed: () async {
+                                                    sendEmail(
+                                                      '${details['firstName']} ${details['secondName']}',
+                                                      '${details['email']}',
+                                                      '${details['uid']}',
+                                                    );
+                                                  },
+                                                  child: const Text(
+                                                      'Send Uid by Mail')),
                                             ),
                                           ),
                                         ],
