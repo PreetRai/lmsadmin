@@ -24,16 +24,11 @@ class _HomepageState extends State<Homepage> {
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snap) {
         switch (snap.connectionState) {
-          case ConnectionState.none:
-            return const LoginPage();
           case ConnectionState.waiting:
             return const SplashScreen();
           case ConnectionState.done:
             return const DashBoard();
-          case ConnectionState.active:
-            if (snap.hasData) {
-              return const DashBoard();
-            }
+          default:
             return const LoginPage();
         }
       },

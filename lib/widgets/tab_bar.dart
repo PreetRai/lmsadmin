@@ -19,9 +19,8 @@ List<TabPair> tabPairs = [
       text: 'Oppertunities',
     ),
     view: const Center(
-      // replace with your own widget here
       child: Text(
-        'Ingredients here',
+        'null',
         style: TextStyle(
           fontSize: 25,
           fontWeight: FontWeight.w600,
@@ -32,8 +31,9 @@ List<TabPair> tabPairs = [
 ];
 
 class TabBarAndTabViews extends StatefulWidget {
-  
-  const TabBarAndTabViews({Key? key, }) : super(key: key);
+  const TabBarAndTabViews({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _TabBarAndTabViewsState createState() => _TabBarAndTabViewsState();

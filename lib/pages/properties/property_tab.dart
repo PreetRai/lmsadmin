@@ -1,12 +1,14 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:lmsadmin/model/user_model.dart';
 import 'package:lmsadmin/pages/contacts/display_contacts_details.dart';
 import 'package:lmsadmin/pages/properties/add_properties.dart';
 import 'package:lmsadmin/pages/properties/property_list.dart';
-import 'package:lmsadmin/pages/properties/update_property.dart';
-import '../../extentions/string_extension.dart';
+import 'package:uuid/uuid.dart';
 
 class PropertTab extends StatefulWidget {
   static ValueNotifier<String> pid = ValueNotifier('');
@@ -87,210 +89,262 @@ class _PropertTabState extends State<PropertTab> {
                                     return Expanded(
                                         child: Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: ListView(
-                                        children: [
-                                          const Align(
-                                              alignment: Alignment.topLeft,
-                                              child: Text('Property Details')),
-                                          const SizedBox(
-                                            height: 30,
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.all(8),
-                                            child: Flexible(
-                                              child: Flex(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                direction: Axis.horizontal,
+                                      child: Flex(
+                                          direction: Axis.vertical,
+                                          children: [
+                                            Flexible(
+                                              child: ListView(
                                                 children: [
-                                                  const Text('Category : '),
-                                                  Expanded(
-                                                    child: Text(
-                                                      '${details['category']}',
-                                                      softWrap: true,
+                                                  const Align(
+                                                      alignment:
+                                                          Alignment.topLeft,
+                                                      child: Text(
+                                                          'Property Details')),
+                                                  const SizedBox(
+                                                    height: 30,
+                                                  ),
+                                                  Padding(
+                                                    padding: EdgeInsets.all(8),
+                                                    child: Flexible(
+                                                      child: Flex(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        direction:
+                                                            Axis.horizontal,
+                                                        children: [
+                                                          const Text(
+                                                              'Category : '),
+                                                          Expanded(
+                                                            child: Text(
+                                                              '${details['category']}',
+                                                              softWrap: true,
+                                                            ),
+                                                          )
+                                                        ],
+                                                      ),
                                                     ),
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.all(8),
-                                            child: Flexible(
-                                              child: Flex(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                direction: Axis.horizontal,
-                                                children: [
-                                                  const Text('Type : '),
-                                                  Text('${details['type']}')
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.all(8),
-                                            child: Flexible(
-                                              child: Flex(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                direction: Axis.horizontal,
-                                                children: [
-                                                  const Text('Subtype : '),
-                                                  Text('${details['subtype']}')
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.all(8),
-                                            child: Flexible(
-                                              child: Flex(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                direction: Axis.horizontal,
-                                                children: [
-                                                  const Text(
-                                                      'Address Line 1 : '),
-                                                  Text(
-                                                      '${details['addressone']}')
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.all(8),
-                                            child: Flexible(
-                                              child: Flex(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                direction: Axis.horizontal,
-                                                children: [
-                                                  const Text(
-                                                      'Address Line 2 : '),
-                                                  Text(
-                                                      '${details['addresstwo']}')
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.all(8),
-                                            child: Flexible(
-                                              child: Flex(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                direction: Axis.horizontal,
-                                                children: [
-                                                  const Text('Contractor : '),
-                                                  Text(
-                                                      '${details['contractor']}')
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.all(8),
-                                            child: Flexible(
-                                              child: Flex(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                direction: Axis.horizontal,
-                                                children: [
-                                                  const Text(
-                                                      'Contractor Number : '),
-                                                  Text(
-                                                      '${details['contractorphn']}'),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.all(8),
-                                            child: Flexible(
-                                              child: Flex(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                direction: Axis.horizontal,
-                                                children: [
-                                                  const Text(
-                                                      'Architectutre/Interior : '),
-                                                  Text(
-                                                      '${details['architect']}'),
-                                                  const SizedBox(
-                                                    width: 10,
+                                                  ),
+                                                  Padding(
+                                                    padding: EdgeInsets.all(8),
+                                                    child: Flexible(
+                                                      child: Flex(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        direction:
+                                                            Axis.horizontal,
+                                                        children: [
+                                                          const Text('Type : '),
+                                                          Text(
+                                                              '${details['type']}')
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding: EdgeInsets.all(8),
+                                                    child: Flexible(
+                                                      child: Flex(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        direction:
+                                                            Axis.horizontal,
+                                                        children: [
+                                                          const Text(
+                                                              'Subtype : '),
+                                                          Text(
+                                                              '${details['subtype']}')
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding: EdgeInsets.all(8),
+                                                    child: Flexible(
+                                                      child: Flex(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        direction:
+                                                            Axis.horizontal,
+                                                        children: [
+                                                          const Text(
+                                                              'Address Line 1 : '),
+                                                          Text(
+                                                              '${details['addressone']}')
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding: EdgeInsets.all(8),
+                                                    child: Flexible(
+                                                      child: Flex(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        direction:
+                                                            Axis.horizontal,
+                                                        children: [
+                                                          const Text(
+                                                              'Address Line 2 : '),
+                                                          Text(
+                                                              '${details['addresstwo']}')
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding: EdgeInsets.all(8),
+                                                    child: Flexible(
+                                                      child: Flex(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        direction:
+                                                            Axis.horizontal,
+                                                        children: [
+                                                          const Text(
+                                                              'Contractor : '),
+                                                          Text(
+                                                              '${details['contractor']}')
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding: EdgeInsets.all(8),
+                                                    child: Flexible(
+                                                      child: Flex(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        direction:
+                                                            Axis.horizontal,
+                                                        children: [
+                                                          const Text(
+                                                              'Contractor Number : '),
+                                                          Text(
+                                                              '${details['contractorphn']}'),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding: EdgeInsets.all(8),
+                                                    child: Flexible(
+                                                      child: Flex(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        direction:
+                                                            Axis.horizontal,
+                                                        children: [
+                                                          const Text(
+                                                              'Architectutre/Interior : '),
+                                                          Text(
+                                                              '${details['architect']}'),
+                                                          const SizedBox(
+                                                            width: 10,
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding: EdgeInsets.all(8),
+                                                    child: Flexible(
+                                                      child: Flex(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        direction:
+                                                            Axis.horizontal,
+                                                        children: [
+                                                          const Text(
+                                                              'Architectutre/Interior Number : '),
+                                                          Text(
+                                                              '${details['architectphn']}'),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding: EdgeInsets.all(8),
+                                                    child: Flexible(
+                                                      child: Flex(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        direction:
+                                                            Axis.horizontal,
+                                                        children: [
+                                                          const Text(
+                                                              'Supervisor : '),
+                                                          Text(
+                                                              '${details['supervisor']}'),
+                                                          const SizedBox(
+                                                            width: 10,
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding: EdgeInsets.all(8),
+                                                    child: Flexible(
+                                                      child: Flex(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        direction:
+                                                            Axis.horizontal,
+                                                        children: [
+                                                          const Text(
+                                                              'Supervisor Number : '),
+                                                          Text(
+                                                              '${details['supervisorphn']}'),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding: EdgeInsets.all(8),
+                                                    child: Flexible(
+                                                      child: Flex(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        direction:
+                                                            Axis.horizontal,
+                                                        children: [
+                                                          const Text(
+                                                              'Property Details : '),
+                                                          Text(
+                                                              '${details['details']}')
+                                                        ],
+                                                      ),
+                                                    ),
                                                   ),
                                                 ],
                                               ),
                                             ),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.all(8),
-                                            child: Flexible(
-                                              child: Flex(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                direction: Axis.horizontal,
-                                                children: [
-                                                  const Text(
-                                                      'Architectutre/Interior Number : '),
-                                                  Text(
-                                                      '${details['architectphn']}'),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.all(8),
-                                            child: Flexible(
-                                              child: Flex(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                direction: Axis.horizontal,
-                                                children: [
-                                                  const Text('Supervisor : '),
-                                                  Text(
-                                                      '${details['supervisor']}'),
-                                                  const SizedBox(
-                                                    width: 10,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.all(8),
-                                            child: Flexible(
-                                              child: Flex(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                direction: Axis.horizontal,
-                                                children: [
-                                                  const Text(
-                                                      'Supervisor Number : '),
-                                                  Text(
-                                                      '${details['supervisorphn']}'),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.all(8),
-                                            child: Flexible(
-                                              child: Flex(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                direction: Axis.horizontal,
-                                                children: [
-                                                  const Text(
-                                                      'Property Details : '),
-                                                  Text('${details['details']}')
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                                            Align(
+                                                alignment:
+                                                    Alignment.bottomRight,
+                                                child: ElevatedButton(
+                                                  onPressed: () {
+                                                    createLead(
+                                                        PropertTab.pid.value,
+                                                        DisplayConDetails
+                                                            .cid.value);
+                                                  },
+                                                  child: Text(
+                                                      'Create Opportunity'),
+                                                ))
+                                          ]),
                                     ));
                                   }),
                             );
@@ -338,5 +392,35 @@ class _PropertTabState extends State<PropertTab> {
     var docSnapshot = await collection.doc(pid).get();
     Map<dynamic, dynamic> data = docSnapshot.data()!;
     return data;
+  }
+
+  createLead(String? pid, String? cid) async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    Uuid uuid = Uuid();
+    String oid = uuid.v4();
+    OpportunityModel opportunityModel = OpportunityModel();
+    // writing all the values
+    opportunityModel.cid = cid;
+    opportunityModel.pid = pid;
+    opportunityModel.oid = oid;
+    await firebaseFirestore
+        .collection("Opportunity")
+        .doc(oid)
+        .set(opportunityModel.toMap());
+    await firebaseFirestore
+        .collection("Contacts")
+        .doc(cid)
+        .collection("Opportunity")
+        .doc(oid)
+        .set(opportunityModel.toMap());
+
+    await firebaseFirestore
+        .collection("Property")
+        .doc(pid)
+        .collection("Opportunity")
+        .doc(oid)
+        .set(opportunityModel.toMap());
+
+    Fluttertoast.showToast(msg: "opportunity created");
   }
 }

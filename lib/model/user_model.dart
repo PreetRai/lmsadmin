@@ -222,3 +222,28 @@ class PropertyModel {
     };
   }
 }
+
+class OpportunityModel {
+  String? cid;
+  String? pid;
+  String? oid;
+  OpportunityModel({
+    this.cid,
+    this.pid,
+    this.oid,
+  });
+
+  // receiving data from server
+  factory OpportunityModel.fromMap(map) {
+    return OpportunityModel(
+      cid: map['cid'],
+      pid: map['pid'],
+      oid: map['oid'],
+    );
+  }
+
+  // sending data to our server
+  Map<String, dynamic> toMap() {
+    return {'cid': cid, 'pid': pid, 'oid': oid};
+  }
+}

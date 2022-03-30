@@ -182,9 +182,26 @@ class _PropertyListState extends State<PropertyList> {
                                                                             () {
                                                                           setState(
                                                                               () {
-                                                                            FirebaseFirestore.instance.collection("Contacts").doc(property['cid']).collection("Property").doc(property['pid']).delete();
-
                                                                             FirebaseFirestore.instance.collection("Property").doc(property['pid']).delete();
+
+                                                                            PropertTab.pid.value =
+                                                                                "";
+                                                                            FirebaseFirestore.instance.collection("Contacts").doc(property['cid']).collection("Property").doc(property['pid']).delete();
+                                                                            FirebaseFirestore.instance.collection("Property").doc(property['pid']).collection('Opportunity').get().then((value) {
+                                                                              for (DocumentSnapshot ds in value.docs) {
+                                                                                ds.reference.delete();
+                                                                              }
+                                                                            });
+                                                                            FirebaseFirestore.instance.collection("Contacts").doc(property['cid']).collection('Opportunity').get().then((value) {
+                                                                              for (DocumentSnapshot ds in value.docs) {
+                                                                                ds.reference.delete();
+                                                                              }
+                                                                            });
+                                                                            FirebaseFirestore.instance.collection("Contacts").doc(property['cid']).collection('Property').get().then((value) {
+                                                                              for (DocumentSnapshot ds in value.docs) {
+                                                                                ds.reference.delete();
+                                                                              }
+                                                                            });
                                                                           });
                                                                         },
                                                                         child:
