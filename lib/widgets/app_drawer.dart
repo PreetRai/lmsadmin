@@ -151,7 +151,22 @@ class _AppDrawerState extends State<AppDrawer> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: const [
                         Text(
-                          'Opportunities',
+                          'Opportunities & tasks',
+                        ),
+                        Icon(Icons.group_add)
+                      ],
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) => const Opportunities()));
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: const [
+                        Text(
+                          'Tasks',
                         ),
                         Icon(Icons.group_add)
                       ],

@@ -40,14 +40,14 @@ class _EmployeeNamesState extends State<EmployeeNames> {
                       switch (snapshot.connectionState) {
                         case ConnectionState.none:
                           return Column(
-                              children: [CircularProgressIndicator()]);
+                              children: const [CircularProgressIndicator()]);
                         case ConnectionState.waiting:
                           return Column(
-                              children: [CircularProgressIndicator()]);
+                              children: const [CircularProgressIndicator()]);
 
                         case ConnectionState.active:
                           return Column(
-                              children: [CircularProgressIndicator()]);
+                              children: const [CircularProgressIndicator()]);
                         case ConnectionState.done:
                           return ListView.builder(
                             itemCount: snapshot.data,

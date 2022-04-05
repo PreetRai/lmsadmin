@@ -35,15 +35,15 @@ class _ContactNamesState extends State<ContactNames> {
                       switch (snapshot.connectionState) {
                         case ConnectionState.none:
                           return Column(
-                            children: [CircularProgressIndicator()],
+                            children: const [CircularProgressIndicator()],
                           );
                         case ConnectionState.waiting:
                           return Column(
-                            children: [CircularProgressIndicator()],
+                            children: const [CircularProgressIndicator()],
                           );
                         case ConnectionState.active:
                           return Column(
-                            children: [CircularProgressIndicator()],
+                            children: const [CircularProgressIndicator()],
                           );
                         case ConnectionState.done:
                           return ListView.builder(
@@ -65,7 +65,6 @@ class _ContactNamesState extends State<ContactNames> {
                                                 leading:
                                                     CircularProgressIndicator()));
                                       case ConnectionState.active:
-                                        Map contacts = snapshot.data!;
                                         return const Card(
                                             child: ListTile(
                                                 leading:

@@ -21,6 +21,5 @@ Future sendEmail(String name, String email, String message) async {
           'message': message
         }
       }));
-  print(response.statusCode);
   return response.statusCode;
 }
