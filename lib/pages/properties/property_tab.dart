@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -86,6 +85,7 @@ class _PropertTabState extends State<PropertTab> {
                                     }
 
                                     Map details = snapshot.data!;
+
                                     return Expanded(
                                         child: Padding(
                                       padding: const EdgeInsets.all(8.0),
@@ -328,22 +328,51 @@ class _PropertTabState extends State<PropertTab> {
                                                       ),
                                                     ),
                                                   ),
+                                                  Padding(
+                                                    padding: EdgeInsets.all(8),
+                                                    child: Flexible(
+                                                      child: Flex(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        direction:
+                                                            Axis.horizontal,
+                                                        children: [
+                                                          const Text(
+                                                              'Property oid : '),
+                                                          Text(
+                                                              '${details['oid']}')
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
                                                 ],
                                               ),
                                             ),
                                             Align(
-                                                alignment:
-                                                    Alignment.bottomRight,
-                                                child: ElevatedButton(
-                                                  onPressed: () {
+                                              alignment: Alignment.bottomRight,
+                                              child: ElevatedButton(
+                                                onPressed: () {
+                                                  if (details['oid'] == null ||
+                                                      details['oid'] == '') {
                                                     createLead(
                                                         PropertTab.pid.value,
                                                         DisplayConDetails
                                                             .cid.value);
-                                                  },
-                                                  child: Text(
-                                                      'Create Opportunity'),
-                                                ))
+                                                  } else {
+                                                    Fluttertoast.showToast(
+                                                        msg: 'Already Exists');
+                                                  }
+                                                  // setState(() {
+                                                  //   visible = false;
+                                                  // });
+
+                                                  visible = false;
+                                                },
+                                                child:
+                                                    Text('Create Opportunity'),
+                                              ),
+                                            ),
                                           ]),
                                     ));
                                   }),
@@ -403,10 +432,22 @@ class _PropertTabState extends State<PropertTab> {
     opportunityModel.cid = cid;
     opportunityModel.pid = pid;
     opportunityModel.oid = oid;
+
+    await firebaseFirestore
+        .collection('Property')
+        .doc(pid)
+        .update({'oid': oid});
+    await firebaseFirestore
+        .collection('Contacts')
+        .doc(cid)
+        .collection('Property')
+        .doc(pid)
+        .update({'oid': oid});
     await firebaseFirestore
         .collection("Opportunity")
         .doc(oid)
         .set(opportunityModel.toMap());
+
     await firebaseFirestore
         .collection("Contacts")
         .doc(cid)

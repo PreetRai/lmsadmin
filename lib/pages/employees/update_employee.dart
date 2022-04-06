@@ -315,7 +315,7 @@ class _UpdateemployeedetailsState extends State<Updateemployeedetails> {
                                                               'Select Date'),
                                                   validator: (value) {
                                                     if (value!.isEmpty) {
-                                                      return ("Second Name cannot be Empty");
+                                                      return ("Date cannot be Empty");
                                                     }
                                                     return null;
                                                   },
@@ -394,7 +394,7 @@ class _UpdateemployeedetailsState extends State<Updateemployeedetails> {
     employeeModel.firstName = firstNameEditingController.text;
     employeeModel.secondName = secondNameEditingController.text;
     employeeModel.address = addressEdititngController.text;
-    employeeModel.joiningDate = dateEditingController.text;
+    employeeModel.joiningdate = dateEditingController.text;
     employeeModel.jobTile = jobtitleEditingController.text;
     employeeModel.phone = phoneEdititngController.text;
     employeeModel.isAdmin = false;
@@ -434,7 +434,6 @@ class _UpdateemployeedetailsState extends State<Updateemployeedetails> {
     firstNameEditingController.text = data['firstName'];
     secondNameEditingController.text = data['secondName'];
     jobtitleEditingController.text = data['jobtitle'];
-    dateEditingController.text = data['joiningdate'];
     emailEditingController.text = data['email'];
     phoneEdititngController.text = data['phone'];
     addressEdititngController.text = data['address'];

@@ -42,7 +42,7 @@ class EmpModel {
   String? firstName;
   String? secondName;
   String? jobTile;
-  String? joiningDate;
+  String? joiningdate;
   String? email;
   String? phone;
   String? address;
@@ -57,7 +57,7 @@ class EmpModel {
       this.username,
       this.jobTile,
       this.address,
-      this.joiningDate,
+      this.joiningdate,
       this.phone,
       this.isAdmin});
 
@@ -71,7 +71,7 @@ class EmpModel {
         username: map['username'],
         jobTile: map['jobtitle'],
         address: map['address'],
-        joiningDate: map['joiningdate'],
+        joiningdate: map['joiningdate'],
         phone: map['phone'],
         isAdmin: map['isAdmin']);
   }
@@ -86,7 +86,7 @@ class EmpModel {
       'username': username,
       'jobtitle': jobTile,
       'address': address,
-      'joiningdate': joiningDate,
+      'joiningdate': joiningdate,
       'phone': phone,
       'isAdmin': isAdmin,
     };
@@ -165,7 +165,7 @@ class PropertyModel {
   String? supervisorphn;
   String? contractorphn;
   String? architectphn;
-
+  String? oid;
   PropertyModel(
       {this.cid,
       this.pid,
@@ -180,26 +180,27 @@ class PropertyModel {
       this.details,
       this.architectphn,
       this.contractorphn,
-      this.supervisorphn});
+      this.supervisorphn,
+      this.oid});
 
   // receiving data from server
   factory PropertyModel.fromMap(map) {
     return PropertyModel(
-      cid: map['cid'],
-      pid: map['pid'],
-      category: map['category'],
-      type: map['type'],
-      subtype: map['subtype'],
-      addressone: map['addressone'],
-      addresstwo: map['addresstwo'],
-      contractor: map['contractor'],
-      architect: map['architect'],
-      supervisor: map['supervisor'],
-      details: map['details'],
-      architectphn: map['architectphn'],
-      contractorphn: map['contractorphn'],
-      supervisorphn: map['supervisorphn'],
-    );
+        cid: map['cid'],
+        pid: map['pid'],
+        category: map['category'],
+        type: map['type'],
+        subtype: map['subtype'],
+        addressone: map['addressone'],
+        addresstwo: map['addresstwo'],
+        contractor: map['contractor'],
+        architect: map['architect'],
+        supervisor: map['supervisor'],
+        details: map['details'],
+        architectphn: map['architectphn'],
+        contractorphn: map['contractorphn'],
+        supervisorphn: map['supervisorphn'],
+        oid: map['oid']);
   }
 
   // sending data to our server
@@ -219,6 +220,7 @@ class PropertyModel {
       'architectphn': architectphn,
       'contractorphn': contractorphn,
       'supervisorphn': supervisorphn,
+      'oid': oid
     };
   }
 }

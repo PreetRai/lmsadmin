@@ -431,7 +431,7 @@ class _AddEmployeeState extends State<AddEmployee> {
       employeeModel.firstName = firstNameEditingController.text;
       employeeModel.secondName = secondNameEditingController.text;
       employeeModel.address = addressEdititngController.text;
-      employeeModel.joiningDate = dateEditingController.text;
+      employeeModel.joiningdate = dateEditingController.text;
       employeeModel.jobTile = jobtitleEditingController.text;
       employeeModel.phone = phoneEdititngController.text;
       employeeModel.isAdmin = false;
