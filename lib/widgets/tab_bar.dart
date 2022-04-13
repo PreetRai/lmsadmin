@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lmsadmin/pages/opportunities/opportunities.dart';
 import 'package:lmsadmin/pages/properties/property_tab.dart';
 
 class TabPair {
@@ -18,15 +19,7 @@ List<TabPair> tabPairs = [
     tab: const Tab(
       text: 'Oppertunities',
     ),
-    view: const Center(
-      child: Text(
-        'null',
-        style: TextStyle(
-          fontSize: 25,
-          fontWeight: FontWeight.w600,
-        ),
-      ),
-    ),
+    view: const Center(child: OpportunityTab()),
   )
 ];
 

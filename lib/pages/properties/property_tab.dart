@@ -328,24 +328,6 @@ class _PropertTabState extends State<PropertTab> {
                                                       ),
                                                     ),
                                                   ),
-                                                  Padding(
-                                                    padding: EdgeInsets.all(8),
-                                                    child: Flexible(
-                                                      child: Flex(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        direction:
-                                                            Axis.horizontal,
-                                                        children: [
-                                                          const Text(
-                                                              'Property oid : '),
-                                                          Text(
-                                                              '${details['oid']}')
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
                                                 ],
                                               ),
                                             ),
@@ -359,15 +341,11 @@ class _PropertTabState extends State<PropertTab> {
                                                         PropertTab.pid.value,
                                                         DisplayConDetails
                                                             .cid.value);
+                                                    PropertTab.pid.value = '';
                                                   } else {
                                                     Fluttertoast.showToast(
                                                         msg: 'Already Exists');
                                                   }
-                                                  // setState(() {
-                                                  //   visible = false;
-                                                  // });
-
-                                                  visible = false;
                                                 },
                                                 child:
                                                     Text('Create Opportunity'),
