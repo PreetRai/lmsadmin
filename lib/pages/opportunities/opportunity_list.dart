@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lmsadmin/extentions/string_extension.dart';
+import 'package:lmsadmin/pages/opportunities/opportunities_tab.dart';
 
 import '../contacts/display_contacts_details.dart';
 
@@ -91,7 +92,7 @@ class _OpportunityListState extends State<OpportunityList> {
                                                                 const EdgeInsets
                                                                     .all(6.0),
                                                             child: Text(
-                                                              '${opportunity['email'].toString().toCapitalized()} | ${opportunity['category'].toString().toCapitalized()}',
+                                                              '${opportunity['firstName'].toString().toCapitalized()} ${opportunity['secondName'].toString().toCapitalized()} | ${opportunity['category'].toString().toCapitalized()}',
                                                               style:
                                                                   const TextStyle(
                                                                 fontSize: 20,
@@ -146,61 +147,40 @@ class _OpportunityListState extends State<OpportunityList> {
                                                                 height: 10,
                                                                 child:
                                                                     ElevatedButton(
-                                                                        onPressed:
-                                                                            () {
-                                                                          // Navigator.of(context).pushReplacement(MaterialPageRoute(
-                                                                          //     builder: (context) => UpdateProperty(
-                                                                          //           cid: property['cid'],
-                                                                          //           pid: property['pid'],
-                                                                          //         )));
-                                                                          //                                                               Navigator.of(context).pushReplacement(MaterialPageRoute(
-                                                                          // builder: (context) =>  UpdateProperty(pid: property['pid'],cid: property['cid'],)));
-                                                                        },
-                                                                        child:
-                                                                            const Text(
-                                                                          'Edit',
-                                                                          style: TextStyle(
-                                                                              fontSize: 10,
-                                                                              fontWeight: FontWeight.w600),
-                                                                        )),
-                                                              ),
-                                                            ),
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .all(8.0),
-                                                              child: SizedBox(
-                                                                height: 10,
-                                                                child:
-                                                                    ElevatedButton(
                                                                         style: ElevatedButton.styleFrom(
                                                                             primary: Colors
                                                                                 .red),
                                                                         onPressed:
                                                                             () {
-                                                                          //       setState(
-                                                                          //           () {
-                                                                          //         FirebaseFirestore.instance.collection("Property").doc(property['pid']).delete();
+                                                                          setState(
+                                                                              () {
+                                                                            FirebaseFirestore.instance.collection("Opportunity").doc(opportunity['oid']).delete();
 
-                                                                          // //        PropertTab.pid.value =
-                                                                          //   //          "";
-                                                                          //         FirebaseFirestore.instance.collection("Contacts").doc(property['cid']).collection("Property").doc(property['pid']).delete();
-                                                                          //         FirebaseFirestore.instance.collection("Property").doc(property['pid']).collection('Opportunity').get().then((value) {
-                                                                          //           for (DocumentSnapshot ds in value.docs) {
-                                                                          //             ds.reference.delete();
-                                                                          //           }
-                                                                          //         });
-                                                                          //         FirebaseFirestore.instance.collection("Contacts").doc(property['cid']).collection('Opportunity').get().then((value) {
-                                                                          //           for (DocumentSnapshot ds in value.docs) {
-                                                                          //             ds.reference.delete();
-                                                                          //           }
-                                                                          //         });
-                                                                          //         FirebaseFirestore.instance.collection("Contacts").doc(property['cid']).collection('Property').get().then((value) {
-                                                                          //           for (DocumentSnapshot ds in value.docs) {
-                                                                          //             ds.reference.delete();
-                                                                          //           }
-                                                                          //         });
-                                                                          //       });
+                                                                            OpportunityTab.oid.value =
+                                                                                "";
+                                                                            FirebaseFirestore.instance.collection("Property").doc(opportunity['pid']).update({
+                                                                              'oid': null
+                                                                            });
+                                                                            FirebaseFirestore.instance.collection("Contacts").doc(opportunity['cid']).collection("Property").doc(opportunity['pid']).update({
+                                                                              'oid': null
+                                                                            });
+                                                                            FirebaseFirestore.instance.collection("Contacts").doc(opportunity['cid']).collection("Opportunity").doc(opportunity['oid']).delete();
+                                                                            FirebaseFirestore.instance.collection("Opportunity").doc(opportunity['oid']).collection('Opportunity').get().then((value) {
+                                                                              for (DocumentSnapshot ds in value.docs) {
+                                                                                ds.reference.delete();
+                                                                              }
+                                                                            });
+                                                                            FirebaseFirestore.instance.collection("Contacts").doc(opportunity['cid']).collection('Opportunity').get().then((value) {
+                                                                              for (DocumentSnapshot ds in value.docs) {
+                                                                                ds.reference.delete();
+                                                                              }
+                                                                            });
+                                                                            FirebaseFirestore.instance.collection("Property").doc(opportunity['pid']).collection('Opportunity').get().then((value) {
+                                                                              for (DocumentSnapshot ds in value.docs) {
+                                                                                ds.reference.delete();
+                                                                              }
+                                                                            });
+                                                                          });
                                                                         },
                                                                         child:
                                                                             const Text(

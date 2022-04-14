@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lmsadmin/extentions/string_extension.dart';
 
 import '../contacts/display_contacts_details.dart';
+import '../opportunities/opportunities_tab.dart';
 import 'property_tab.dart';
 import 'update_property.dart';
 
@@ -202,6 +203,33 @@ class _PropertyListState extends State<PropertyList> {
                                                                                 ds.reference.delete();
                                                                               }
                                                                             });
+
+                                                                            FirebaseFirestore.instance.collection("Opportunity").doc(property['oid']).delete();
+
+                                                                            OpportunityTab.oid.value =
+                                                                                "";
+                                                                            FirebaseFirestore.instance.collection("Property").doc(property['pid']).update({
+                                                                              'oid': null
+                                                                            });
+                                                                            FirebaseFirestore.instance.collection("Contacts").doc(property['cid']).collection("Property").doc(property['pid']).update({
+                                                                              'oid': null
+                                                                            });
+                                                                            FirebaseFirestore.instance.collection("Contacts").doc(property['cid']).collection("Opportunity").doc(property['oid']).delete();
+                                                                            FirebaseFirestore.instance.collection("Opportunity").doc(property['oid']).collection('Opportunity').get().then((value) {
+                                                                              for (DocumentSnapshot ds in value.docs) {
+                                                                                ds.reference.delete();
+                                                                              }
+                                                                            });
+                                                                            FirebaseFirestore.instance.collection("Contacts").doc(property['cid']).collection('Opportunity').get().then((value) {
+                                                                              for (DocumentSnapshot ds in value.docs) {
+                                                                                ds.reference.delete();
+                                                                              }
+                                                                            });
+                                                                            FirebaseFirestore.instance.collection("Property").doc(property['pid']).collection('Opportunity').get().then((value) {
+                                                                              for (DocumentSnapshot ds in value.docs) {
+                                                                                ds.reference.delete();
+                                                                              }
+                                                                            });
                                                                           });
                                                                         },
                                                                         child:
@@ -271,6 +299,7 @@ class _PropertyListState extends State<PropertyList> {
     elementAt['type'] = '${document.elementAt(snap).get('type')}';
     elementAt['subtype'] = '${document.elementAt(snap).get('subtype')}';
     elementAt['addressone'] = '${document.elementAt(snap).get('addressone')}';
+   elementAt['oid'] = '${document.elementAt(snap).get('oid')}';
     return elementAt;
   }
 }

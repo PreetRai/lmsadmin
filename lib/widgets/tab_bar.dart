@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lmsadmin/pages/opportunities/opportunities.dart';
+import 'package:lmsadmin/pages/opportunities/opportunities_tab.dart';
 import 'package:lmsadmin/pages/properties/property_tab.dart';
 
 class TabPair {

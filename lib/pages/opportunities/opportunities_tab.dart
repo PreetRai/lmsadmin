@@ -5,13 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lmsadmin/model/user_model.dart';
 import 'package:lmsadmin/pages/contacts/display_contacts_details.dart';
-import 'package:lmsadmin/pages/opportunities/opportunitylist.dart';
-import 'package:lmsadmin/pages/properties/add_properties.dart';
-import 'package:lmsadmin/pages/properties/property_list.dart';
+import 'package:lmsadmin/pages/opportunities/opportunity_list.dart';
 import 'package:uuid/uuid.dart';
 
 class OpportunityTab extends StatefulWidget {
-  static ValueNotifier<String> pid = ValueNotifier('');
+  static ValueNotifier<String> oid = ValueNotifier('');
   const OpportunityTab({Key? key}) : super(key: key);
 
   @override
@@ -24,21 +22,10 @@ class _OpportunityTab extends State<OpportunityTab> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Align(
-            alignment: Alignment.topRight,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) => const AddProperties()));
-                  },
-                  child: const Text('Add Property')),
-            )),
         const Align(
           alignment: Alignment.topLeft,
           child: Text(
-            'Properties:',
+            'Opportunities:',
             style: TextStyle(fontSize: 20),
           ),
         ),
